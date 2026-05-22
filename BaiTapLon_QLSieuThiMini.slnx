@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/BaiTapLon_Database/">
+    <File Path="Database.sql" />
+  </Folder>
   <Project Path="BaiTapLon_QLSieuThiMini/BaiTapLon_QLSieuThiMini.csproj" />
 </Solution>
