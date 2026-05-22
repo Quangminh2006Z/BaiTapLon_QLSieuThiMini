@@ -5,6 +5,22 @@
         public Form1()
         {
             InitializeComponent();
+            if (!DatabaseHelper.TestConnection())
+            {
+                MessageBox.Show(
+                    "Khong ket noi duoc database!\n" +
+                    "Hay chay file Database.sql trong SSMS truoc.",
+                    "Loi ket noi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("Ket noi thanh cong!",
+                                "OK",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
