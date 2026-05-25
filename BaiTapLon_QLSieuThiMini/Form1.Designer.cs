@@ -40,8 +40,15 @@
             label6 = new Label();
             label7 = new Label();
             tableLichSuNhap = new DataGridView();
+            ColumnForMaPN = new DataGridViewTextBoxColumn();
+            ColumnForMaSP = new DataGridViewTextBoxColumn();
+            ColumnForTenSP = new DataGridViewTextBoxColumn();
+            ColumnForThanhTien = new DataGridViewTextBoxColumn();
+            ColumnForNgay = new DataGridViewTextBoxColumn();
             label5 = new Label();
             tableLayoutPanel1 = new TableLayoutPanel();
+            textBoxForMaPN = new TextBox();
+            labelForMaPN = new Label();
             textBoxForDonGia = new TextBox();
             textBoxForTenSP = new TextBox();
             textBoxForSoLuong = new TextBox();
@@ -51,11 +58,6 @@
             label4 = new Label();
             textBoxForMaSP = new TextBox();
             buttonAdd = new Button();
-            ColumnForMaPN = new DataGridViewTextBoxColumn();
-            CollumnForMaSP = new DataGridViewTextBoxColumn();
-            CollumnForTenSP = new DataGridViewTextBoxColumn();
-            CollumnForThanhTien = new DataGridViewTextBoxColumn();
-            CollumnForNgay = new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabNhapHang.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
@@ -109,7 +111,6 @@
             tabNhapHang.Size = new Size(1307, 690);
             tabNhapHang.TabIndex = 2;
             tabNhapHang.Text = "Nhập hàng & thống kê";
-            tabNhapHang.Click += tabPage3_Click;
             // 
             // tableLayoutPanel2
             // 
@@ -145,7 +146,6 @@
             tableKhoHang.RowHeadersWidth = 51;
             tableKhoHang.Size = new Size(1284, 167);
             tableKhoHang.TabIndex = 9;
-            tableKhoHang.CellContentClick += dataGridView1_CellContentClick;
             // 
             // ColumnMaSP
             // 
@@ -197,7 +197,7 @@
             tableLichSuNhap.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tableLichSuNhap.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tableLichSuNhap.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableLichSuNhap.Columns.AddRange(new DataGridViewColumn[] { ColumnForMaPN, CollumnForMaSP, CollumnForTenSP, CollumnForThanhTien, CollumnForNgay });
+            tableLichSuNhap.Columns.AddRange(new DataGridViewColumn[] { ColumnForMaPN, ColumnForMaSP, ColumnForTenSP, ColumnForThanhTien, ColumnForNgay });
             tableLichSuNhap.GridColor = SystemColors.HighlightText;
             tableLichSuNhap.Location = new Point(3, 262);
             tableLichSuNhap.Name = "tableLichSuNhap";
@@ -206,6 +206,41 @@
             tableLichSuNhap.Size = new Size(1284, 168);
             tableLichSuNhap.TabIndex = 11;
             tableLichSuNhap.CellContentClick += dataGridView2_CellContentClick;
+            // 
+            // ColumnForMaPN
+            // 
+            ColumnForMaPN.HeaderText = "Mã Phiếu Nhập";
+            ColumnForMaPN.MinimumWidth = 6;
+            ColumnForMaPN.Name = "ColumnForMaPN";
+            ColumnForMaPN.ReadOnly = true;
+            // 
+            // ColumnForMaSP
+            // 
+            ColumnForMaSP.HeaderText = "Mã sản phẩm";
+            ColumnForMaSP.MinimumWidth = 6;
+            ColumnForMaSP.Name = "ColumnForMaSP";
+            ColumnForMaSP.ReadOnly = true;
+            // 
+            // ColumnForTenSP
+            // 
+            ColumnForTenSP.HeaderText = "Tên sản phẩm";
+            ColumnForTenSP.MinimumWidth = 6;
+            ColumnForTenSP.Name = "ColumnForTenSP";
+            ColumnForTenSP.ReadOnly = true;
+            // 
+            // ColumnForThanhTien
+            // 
+            ColumnForThanhTien.HeaderText = "Thành tiền nhập hàng";
+            ColumnForThanhTien.MinimumWidth = 6;
+            ColumnForThanhTien.Name = "ColumnForThanhTien";
+            ColumnForThanhTien.ReadOnly = true;
+            // 
+            // ColumnForNgay
+            // 
+            ColumnForNgay.HeaderText = "Ngày nhập hàng";
+            ColumnForNgay.MinimumWidth = 6;
+            ColumnForNgay.Name = "ColumnForNgay";
+            ColumnForNgay.ReadOnly = true;
             // 
             // label5
             // 
@@ -217,7 +252,6 @@
             label5.TabIndex = 7;
             label5.Text = "Nhập sản phẩm mới vào kho";
             label5.TextAlign = ContentAlignment.MiddleCenter;
-            label5.Click += label5_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -227,6 +261,8 @@
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 35F));
+            tableLayoutPanel1.Controls.Add(textBoxForMaPN, 1, 2);
+            tableLayoutPanel1.Controls.Add(labelForMaPN, 0, 2);
             tableLayoutPanel1.Controls.Add(textBoxForDonGia, 3, 1);
             tableLayoutPanel1.Controls.Add(textBoxForTenSP, 1, 1);
             tableLayoutPanel1.Controls.Add(textBoxForSoLuong, 3, 0);
@@ -235,7 +271,7 @@
             tableLayoutPanel1.Controls.Add(label3, 0, 1);
             tableLayoutPanel1.Controls.Add(label4, 2, 0);
             tableLayoutPanel1.Controls.Add(textBoxForMaSP, 1, 0);
-            tableLayoutPanel1.Controls.Add(buttonAdd, 0, 2);
+            tableLayoutPanel1.Controls.Add(buttonAdd, 3, 2);
             tableLayoutPanel1.ForeColor = SystemColors.ControlText;
             tableLayoutPanel1.Location = new Point(6, 49);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -245,6 +281,26 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel1.Size = new Size(1202, 182);
             tableLayoutPanel1.TabIndex = 6;
+            // 
+            // textBoxForMaPN
+            // 
+            textBoxForMaPN.Dock = DockStyle.Fill;
+            textBoxForMaPN.Location = new Point(183, 123);
+            textBoxForMaPN.Name = "textBoxForMaPN";
+            textBoxForMaPN.Size = new Size(414, 27);
+            textBoxForMaPN.TabIndex = 11;
+            // 
+            // labelForMaPN
+            // 
+            labelForMaPN.AutoSize = true;
+            labelForMaPN.Dock = DockStyle.Top;
+            labelForMaPN.Font = new Font("Segoe UI", 12F);
+            labelForMaPN.Location = new Point(3, 120);
+            labelForMaPN.Name = "labelForMaPN";
+            labelForMaPN.Size = new Size(174, 28);
+            labelForMaPN.TabIndex = 10;
+            labelForMaPN.Text = "Mã phiểu nhập: ";
+            labelForMaPN.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // textBoxForDonGia
             // 
@@ -328,9 +384,8 @@
             // 
             // buttonAdd
             // 
-            buttonAdd.Dock = DockStyle.Fill;
             buttonAdd.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonAdd.Location = new Point(10, 130);
+            buttonAdd.Location = new Point(790, 130);
             buttonAdd.Margin = new Padding(10);
             buttonAdd.Name = "buttonAdd";
             buttonAdd.Padding = new Padding(5);
@@ -339,41 +394,6 @@
             buttonAdd.Text = "Nhập hàng";
             buttonAdd.UseVisualStyleBackColor = true;
             buttonAdd.Click += buttonAdd_Click;
-            // 
-            // ColumnForMaPN
-            // 
-            ColumnForMaPN.HeaderText = "Mã Phiếu Nhập";
-            ColumnForMaPN.MinimumWidth = 6;
-            ColumnForMaPN.Name = "ColumnForMaPN";
-            ColumnForMaPN.ReadOnly = true;
-            // 
-            // CollumnForMaSP
-            // 
-            CollumnForMaSP.HeaderText = "Mã sản phẩm";
-            CollumnForMaSP.MinimumWidth = 6;
-            CollumnForMaSP.Name = "CollumnForMaSP";
-            CollumnForMaSP.ReadOnly = true;
-            // 
-            // CollumnForTenSP
-            // 
-            CollumnForTenSP.HeaderText = "Tên sản phẩm";
-            CollumnForTenSP.MinimumWidth = 6;
-            CollumnForTenSP.Name = "CollumnForTenSP";
-            CollumnForTenSP.ReadOnly = true;
-            // 
-            // CollumnForThanhTien
-            // 
-            CollumnForThanhTien.HeaderText = "Thành tiền nhập hàng";
-            CollumnForThanhTien.MinimumWidth = 6;
-            CollumnForThanhTien.Name = "CollumnForThanhTien";
-            CollumnForThanhTien.ReadOnly = true;
-            // 
-            // CollumnForNgay
-            // 
-            CollumnForNgay.HeaderText = "Ngày nhập hàng";
-            CollumnForNgay.MinimumWidth = 6;
-            CollumnForNgay.Name = "CollumnForNgay";
-            CollumnForNgay.ReadOnly = true;
             // 
             // Form1
             // 
@@ -421,10 +441,12 @@
         private Label label7;
         private TableLayoutPanel tableLayoutPanel2;
         private Button buttonAdd;
+        private TextBox textBoxForMaPN;
+        private Label labelForMaPN;
         private DataGridViewTextBoxColumn ColumnForMaPN;
-        private DataGridViewTextBoxColumn CollumnForMaSP;
-        private DataGridViewTextBoxColumn CollumnForTenSP;
-        private DataGridViewTextBoxColumn CollumnForThanhTien;
-        private DataGridViewTextBoxColumn CollumnForNgay;
+        private DataGridViewTextBoxColumn ColumnForMaSP;
+        private DataGridViewTextBoxColumn ColumnForTenSP;
+        private DataGridViewTextBoxColumn ColumnForThanhTien;
+        private DataGridViewTextBoxColumn ColumnForNgay;
     }
 }

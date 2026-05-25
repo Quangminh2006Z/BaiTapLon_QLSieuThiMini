@@ -46,3 +46,10 @@ create table LichSuNhapHang
         FOREIGN KEY (MaSP)
         REFERENCES SanPhamTrongKho(MaSP)
 )
+
+INSERT INTO SanPhamTrongKho
+VALUES ('SP004', N'Mì Hảo Hảo', 100);
+INSERT INTO LichSuNhapHang
+VALUES ('PN001', 'SP004', N'Mì Hảo Hảo', 100, GETDATE(), 3500);
+
+SELECT * FROM LichSuNhapHang;
