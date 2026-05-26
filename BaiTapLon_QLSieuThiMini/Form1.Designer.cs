@@ -132,7 +132,6 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Quản lý sản phẩm được bán ";
             tabPage1.UseVisualStyleBackColor = true;
-            tabPage1.Click += tabPage1_Click;
             // 
             // dataGridView2
             // 
@@ -146,7 +145,6 @@
             dataGridView2.RowHeadersWidth = 51;
             dataGridView2.Size = new Size(1048, 369);
             dataGridView2.TabIndex = 28;
-            dataGridView2.CellContentClick += dataGridView2_CellContentClick_1;
             // 
             // colTen
             // 
@@ -337,7 +335,7 @@
             dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(1049, 346);
+            dataGridView1.Size = new Size(1046, 339);
             dataGridView1.TabIndex = 2;
             // 
             // ColumnMaSPTheThanhToan
