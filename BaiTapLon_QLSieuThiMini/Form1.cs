@@ -19,6 +19,8 @@ namespace BaiTapLon_QLSieuThiMini
         public Form1()
         {
             InitializeComponent();
+            con = new SqlConnection(connectedString);
+            LoadSanPhamLenComboBoxBanHang();
             //Nguyẽn vũ quang minh
             // Tắt tự động tạo cột
             tableLichSuNhap.AutoGenerateColumns = false;
@@ -251,7 +253,61 @@ namespace BaiTapLon_QLSieuThiMini
 
         }
         // Nguyen Vu Quang Minh
+        #region Nguyen Trong Nghia - Tab Ban Hang
 
+        DataTable dtSanPhamDangBan = new DataTable();
+
+        private void LoadSanPhamLenComboBoxBanHang()
+        {
+            if (con == null)
+            {
+                con = new SqlConnection(connectedString);
+            }
+
+            dtSanPhamDangBan.Clear();
+
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                string sql = @"
+            SELECT 
+                spdb.MaSP,
+                spk.TenSP,
+                spdb.SoLuongDangBan,
+                spdb.GiaBan
+            FROM SanPhamDangBan spdb
+            JOIN SanPhamTrongKho spk
+                ON spdb.MaSP = spk.MaSP
+            WHERE spdb.SoLuongDangBan > 0";
+
+                SqlDataAdapter adt = new SqlDataAdapter(sql, con);
+                adt.Fill(dtSanPhamDangBan);
+
+                cboSanPham_tab2.DataSource = dtSanPhamDangBan;
+                cboSanPham_tab2.DisplayMember = "TenSP";
+                cboSanPham_tab2.ValueMember = "MaSP";
+                cboSanPham_tab2.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi load ComboBox bán hàng: " + ex.Message);
+            }
+            finally
+            {
+                if (con != null && con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        #endregion
     }
+
+    
 }
 
