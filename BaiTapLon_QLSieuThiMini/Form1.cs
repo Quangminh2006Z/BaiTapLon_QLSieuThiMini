@@ -91,14 +91,14 @@ namespace BaiTapLon_QLSieuThiMini
                 return;
             }
 
-            
 
-                // Ép kiểu để tính Thành Tiền
-                if (int.TryParse(textBoxForSoLuong.Text, out int soLuong) && int.TryParse(textBoxForDonGia.Text, out int donGia))
+
+            // Ép kiểu để tính Thành Tiền
+            if (int.TryParse(textBoxForSoLuong.Text, out int soLuong) && int.TryParse(textBoxForDonGia.Text, out int donGia))
             {
-                if (soLuong <=0|| donGia <=0)
+                if (soLuong <= 0 || donGia <= 0)
                 {
-                    MessageBox.Show("Vui lòng nhập số nguyên dương!","Thông báo");
+                    MessageBox.Show("Vui lòng nhập số nguyên dương!", "Thông báo");
                     return;
                 }
                 int thanhTien = soLuong * donGia;
@@ -110,10 +110,10 @@ namespace BaiTapLon_QLSieuThiMini
                 DataRow[] foundRowMaSP = dtKhoHang.Select($"MaSP = '{textBoxForMaSP.Text.Trim()}'");
 
                 //Thêm dữ liệu được nhập vào database
-                try 
+                try
                 {
                     //Mở kết nối database
-                    if(con.State == ConnectionState.Closed)
+                    if (con.State == ConnectionState.Closed)
                     {
                         con.Open();
                     }
@@ -124,7 +124,7 @@ namespace BaiTapLon_QLSieuThiMini
                         {
                             //Lệnh checkCmd truy vấn lấy ra số lượng mã sản phẩm tương đồng với MaSP được nhập trong kho
                             string checkCmdText = "SELECT COUNT(*) FROM SanPhamTrongKho WHERE MaSP = @MaSP";
-                            using (SqlCommand cmdCheck = new SqlCommand(checkCmdText, con, trans)) 
+                            using (SqlCommand cmdCheck = new SqlCommand(checkCmdText, con, trans))
                             {
                                 //Gán maSP lấy từ textBox(đặt ở trên) gán cho lệnh checkCmdText
                                 cmdCheck.Parameters.AddWithValue("@MaSP", maSP);
@@ -144,34 +144,34 @@ namespace BaiTapLon_QLSieuThiMini
                                 }
 
                                 //Trường hợp mã sản phẩm vừa được nhập là mới
-                                else 
+                                else
                                 {
                                     string insertCmd = "INSERT INTO SanPhamTrongKho (MaSP,TenSP,SoLuongTrongKho) VALUES (@MaSP,@TenSP,@SoLuong)";
-                                    using ( SqlCommand cmdInsert = new SqlCommand(insertCmd, con, trans))
+                                    using (SqlCommand cmdInsert = new SqlCommand(insertCmd, con, trans))
                                     {
                                         cmdInsert.Parameters.AddWithValue("@MaSP", maSP);
-                                        cmdInsert.Parameters.AddWithValue("@TenSP",tenSP);
+                                        cmdInsert.Parameters.AddWithValue("@TenSP", tenSP);
                                         cmdInsert.Parameters.AddWithValue("@SoLuong", soLuong);
                                         cmdInsert.ExecuteNonQuery();
-                                    }    
+                                    }
                                 }
 
                                 //Lưu vào LichSuNhapHang
-                                if(foundRowMaSP.Length == 0) 
+                                if (foundRowMaSP.Length == 0)
                                 {
-                                    
+
                                     string insertLichSuNhapCmd = "INSERT INTO LichSuNhapHang(MaPN, MaSP,TenSP,SoLuongNhap, NgayNhap,GiaNhap) VALUES (@MaPN,@MaSP,@TenSP,@SoLuongNhap, @NgayNhap,@GiaNhap)";
-                                    using (SqlCommand cmdInsertLichSuNhapCmd = new SqlCommand(insertLichSuNhapCmd,con,trans))
+                                    using (SqlCommand cmdInsertLichSuNhapCmd = new SqlCommand(insertLichSuNhapCmd, con, trans))
                                     {
-                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@MaPN",maPN);
-                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@MaSP",maSP);
-                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@TenSP",tenSP);
-                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@SoLuongNhap",soLuong);
-                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@NgayNhap",ngayNhap);
-                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@GiaNhap",donGia);
+                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@MaPN", maPN);
+                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@MaSP", maSP);
+                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@TenSP", tenSP);
+                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@SoLuongNhap", soLuong);
+                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@NgayNhap", ngayNhap);
+                                        cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@GiaNhap", donGia);
                                         cmdInsertLichSuNhapCmd.ExecuteNonQuery();
 
-                                    }    
+                                    }
                                 }
 
                                 trans.Commit();
@@ -189,7 +189,7 @@ namespace BaiTapLon_QLSieuThiMini
                         }
                     }
                 }
-                catch(Exception ex) 
+                catch (Exception ex)
                 {
                     MessageBox.Show($"Lỗi khi lưu vào database: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -251,9 +251,20 @@ namespace BaiTapLon_QLSieuThiMini
 
         }
 
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void label8_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 
