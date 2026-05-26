@@ -30,6 +30,11 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            dataGridView2 = new DataGridView();
+            sp = new DataGridViewTextBoxColumn();
+            sl = new DataGridViewTextBoxColumn();
+            cost = new DataGridViewTextBoxColumn();
+            gia = new Label();
             btnXoa = new Button();
             btnThem = new Button();
             btnSua = new Button();
@@ -83,13 +88,9 @@
             label4 = new Label();
             textBoxForMaSP = new TextBox();
             buttonAdd = new Button();
-            gia = new Label();
-            dataGridView2 = new DataGridView();
-            sp = new DataGridViewTextBoxColumn();
-            sl = new DataGridViewTextBoxColumn();
-            cost = new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             tableLayoutPanel4.SuspendLayout();
             tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -99,7 +100,6 @@
             ((System.ComponentModel.ISupportInitialize)tableKhoHang).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tableLichSuNhap).BeginInit();
             tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -133,6 +133,50 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "tabPage1";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { sp, sl, cost });
+            dataGridView2.Dock = DockStyle.Bottom;
+            dataGridView2.Location = new Point(4, 429);
+            dataGridView2.Margin = new Padding(4);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.RowHeadersWidth = 51;
+            dataGridView2.Size = new Size(1311, 269);
+            dataGridView2.TabIndex = 28;
+            // 
+            // sp
+            // 
+            sp.HeaderText = "Tên sản phẩm";
+            sp.MinimumWidth = 6;
+            sp.Name = "sp";
+            sp.Width = 125;
+            // 
+            // sl
+            // 
+            sl.HeaderText = "Số lượng sản phẩm";
+            sl.MinimumWidth = 6;
+            sl.Name = "sl";
+            sl.Width = 125;
+            // 
+            // cost
+            // 
+            cost.HeaderText = "Giá";
+            cost.MinimumWidth = 6;
+            cost.Name = "cost";
+            cost.Width = 125;
+            // 
+            // gia
+            // 
+            gia.Anchor = AnchorStyles.Left;
+            gia.AutoSize = true;
+            gia.Location = new Point(18, 336);
+            gia.Margin = new Padding(4, 0, 4, 0);
+            gia.Name = "gia";
+            gia.Size = new Size(84, 25);
+            gia.TabIndex = 27;
+            gia.Text = "Tìm kiếm";
             // 
             // btnXoa
             // 
@@ -732,50 +776,6 @@
             buttonAdd.UseVisualStyleBackColor = true;
             buttonAdd.Click += buttonAdd_Click;
             // 
-            // gia
-            // 
-            gia.Anchor = AnchorStyles.Left;
-            gia.AutoSize = true;
-            gia.Location = new Point(18, 336);
-            gia.Margin = new Padding(4, 0, 4, 0);
-            gia.Name = "gia";
-            gia.Size = new Size(84, 25);
-            gia.TabIndex = 27;
-            gia.Text = "Tìm kiếm";
-            // 
-            // dataGridView2
-            // 
-            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { sp, sl, cost });
-            dataGridView2.Dock = DockStyle.Bottom;
-            dataGridView2.Location = new Point(4, 429);
-            dataGridView2.Margin = new Padding(4);
-            dataGridView2.Name = "dataGridView2";
-            dataGridView2.RowHeadersWidth = 51;
-            dataGridView2.Size = new Size(1311, 269);
-            dataGridView2.TabIndex = 28;
-            // 
-            // sp
-            // 
-            sp.HeaderText = "Tên sản phẩm";
-            sp.MinimumWidth = 6;
-            sp.Name = "sp";
-            sp.Width = 125;
-            // 
-            // sl
-            // 
-            sl.HeaderText = "Số lượng sản phẩm";
-            sl.MinimumWidth = 6;
-            sl.Name = "sl";
-            sl.Width = 125;
-            // 
-            // cost
-            // 
-            cost.HeaderText = "Giá";
-            cost.MinimumWidth = 6;
-            cost.Name = "cost";
-            cost.Width = 125;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -790,6 +790,7 @@
             tabControl1.ResumeLayout(false);
             tabPage1.ResumeLayout(false);
             tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             tableLayoutPanel4.ResumeLayout(false);
             tableLayoutPanel4.PerformLayout();
             tabPage2.ResumeLayout(false);
@@ -803,7 +804,6 @@
             ((System.ComponentModel.ISupportInitialize)tableLichSuNhap).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ResumeLayout(false);
         }
 
