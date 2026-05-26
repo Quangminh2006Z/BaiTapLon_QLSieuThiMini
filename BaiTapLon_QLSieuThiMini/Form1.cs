@@ -19,7 +19,7 @@ namespace BaiTapLon_QLSieuThiMini
         public Form1()
         {
             InitializeComponent();
-
+            //Nguyẽn vũ quang minh
             // Tắt tự động tạo cột
             tableLichSuNhap.AutoGenerateColumns = false;
             // Gắn tên cột trong CSDL vào các cột đã tạo sẵn
@@ -250,21 +250,8 @@ namespace BaiTapLon_QLSieuThiMini
             }
 
         }
+        // Nguyen Vu Quang Minh
 
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnSua_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
 

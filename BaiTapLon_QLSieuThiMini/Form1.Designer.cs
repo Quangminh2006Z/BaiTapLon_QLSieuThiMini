@@ -30,7 +30,12 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            label8 = new Label();
             dgvSanPhamDuocBan_tab1 = new DataGridView();
+            colTen_tab1 = new DataGridViewTextBoxColumn();
+            colSoLuong_tab1 = new DataGridViewTextBoxColumn();
+            colGia_tab1 = new DataGridViewTextBoxColumn();
+            colSoLuongBan_tab1 = new DataGridViewTextBoxColumn();
             btnXoa_tab1 = new Button();
             btnThem_tab1 = new Button();
             btnSua_tab1 = new Button();
@@ -38,13 +43,19 @@
             txtTim_tab1 = new TextBox();
             tableLayoutPanel4 = new TableLayoutPanel();
             cboTenSanPham_tab1 = new ComboBox();
-            txtGia_tab1 = new TextBox();
             search = new Label();
             soluong = new Label();
+            txtGia_tab1 = new TextBox();
             txt_TenSanPhamtab1 = new Label();
             txtSoLuong_tab1 = new TextBox();
             tabPage2 = new TabPage();
+            label10 = new Label();
             dgvGioHang_tab2 = new DataGridView();
+            colMaSP_tab2 = new DataGridViewTextBoxColumn();
+            colTenSanPham_tab2 = new DataGridViewTextBoxColumn();
+            colSoLuong_tab2 = new DataGridViewTextBoxColumn();
+            colDonGia_tab2 = new DataGridViewTextBoxColumn();
+            colThanhTien_tab2 = new DataGridViewTextBoxColumn();
             tableLayoutPanel3 = new TableLayoutPanel();
             lblSanPham = new Label();
             label9 = new Label();
@@ -79,17 +90,6 @@
             label4 = new Label();
             textBoxForMaSP = new TextBox();
             buttonAdd = new Button();
-            label8 = new Label();
-            colTen_tab1 = new DataGridViewTextBoxColumn();
-            colSoLuong_tab1 = new DataGridViewTextBoxColumn();
-            colGia_tab1 = new DataGridViewTextBoxColumn();
-            colSoLuongBan_tab1 = new DataGridViewTextBoxColumn();
-            label10 = new Label();
-            colMaSP_tab2 = new DataGridViewTextBoxColumn();
-            colTenSanPham_tab2 = new DataGridViewTextBoxColumn();
-            colSoLuong_tab2 = new DataGridViewTextBoxColumn();
-            colDonGia_tab2 = new DataGridViewTextBoxColumn();
-            colThanhTien_tab2 = new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvSanPhamDuocBan_tab1).BeginInit();
@@ -111,7 +111,7 @@
             tabControl1.Controls.Add(tabNhapHang);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
-            tabControl1.Margin = new Padding(4, 4, 4, 4);
+            tabControl1.Margin = new Padding(4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1328, 740);
@@ -128,14 +128,23 @@
             tabPage1.Controls.Add(txtTim_tab1);
             tabPage1.Controls.Add(tableLayoutPanel4);
             tabPage1.Location = new Point(4, 34);
-            tabPage1.Margin = new Padding(4, 4, 4, 4);
+            tabPage1.Margin = new Padding(4);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(4, 4, 4, 4);
+            tabPage1.Padding = new Padding(4);
             tabPage1.Size = new Size(1320, 702);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Quản lý sản phẩm được bán ";
             tabPage1.UseVisualStyleBackColor = true;
-            tabPage1.Click += tabPage1_Click;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 11F);
+            label8.Location = new Point(7, 260);
+            label8.Name = "label8";
+            label8.Size = new Size(206, 30);
+            label8.TabIndex = 29;
+            label8.Text = "Sản phẩm được bán";
             // 
             // dgvSanPhamDuocBan_tab1
             // 
@@ -145,18 +154,42 @@
             dgvSanPhamDuocBan_tab1.Columns.AddRange(new DataGridViewColumn[] { colTen_tab1, colSoLuong_tab1, colGia_tab1, colSoLuongBan_tab1 });
             dgvSanPhamDuocBan_tab1.Dock = DockStyle.Bottom;
             dgvSanPhamDuocBan_tab1.Location = new Point(4, 312);
-            dgvSanPhamDuocBan_tab1.Margin = new Padding(4, 4, 4, 4);
+            dgvSanPhamDuocBan_tab1.Margin = new Padding(4);
             dgvSanPhamDuocBan_tab1.Name = "dgvSanPhamDuocBan_tab1";
             dgvSanPhamDuocBan_tab1.RowHeadersWidth = 51;
             dgvSanPhamDuocBan_tab1.Size = new Size(1312, 386);
             dgvSanPhamDuocBan_tab1.TabIndex = 28;
+            // 
+            // colTen_tab1
+            // 
+            colTen_tab1.HeaderText = "Tên sản phẩm";
+            colTen_tab1.MinimumWidth = 6;
+            colTen_tab1.Name = "colTen_tab1";
+            // 
+            // colSoLuong_tab1
+            // 
+            colSoLuong_tab1.HeaderText = "Số lượng sản phẩm";
+            colSoLuong_tab1.MinimumWidth = 6;
+            colSoLuong_tab1.Name = "colSoLuong_tab1";
+            // 
+            // colGia_tab1
+            // 
+            colGia_tab1.HeaderText = "Giá";
+            colGia_tab1.MinimumWidth = 6;
+            colGia_tab1.Name = "colGia_tab1";
+            // 
+            // colSoLuongBan_tab1
+            // 
+            colSoLuongBan_tab1.HeaderText = "Số lượng bán";
+            colSoLuongBan_tab1.MinimumWidth = 6;
+            colSoLuongBan_tab1.Name = "colSoLuongBan_tab1";
             // 
             // btnXoa_tab1
             // 
             btnXoa_tab1.Anchor = AnchorStyles.Right;
             btnXoa_tab1.Font = new Font("Segoe UI", 10F);
             btnXoa_tab1.Location = new Point(1129, 132);
-            btnXoa_tab1.Margin = new Padding(4, 4, 4, 4);
+            btnXoa_tab1.Margin = new Padding(4);
             btnXoa_tab1.Name = "btnXoa_tab1";
             btnXoa_tab1.Size = new Size(179, 94);
             btnXoa_tab1.TabIndex = 24;
@@ -169,7 +202,7 @@
             btnThem_tab1.Anchor = AnchorStyles.Right;
             btnThem_tab1.Font = new Font("Segoe UI", 10F);
             btnThem_tab1.Location = new Point(746, 132);
-            btnThem_tab1.Margin = new Padding(4, 4, 4, 4);
+            btnThem_tab1.Margin = new Padding(4);
             btnThem_tab1.Name = "btnThem_tab1";
             btnThem_tab1.Size = new Size(171, 94);
             btnThem_tab1.TabIndex = 22;
@@ -182,20 +215,19 @@
             btnSua_tab1.Anchor = AnchorStyles.Right;
             btnSua_tab1.Font = new Font("Segoe UI", 10F);
             btnSua_tab1.Location = new Point(935, 132);
-            btnSua_tab1.Margin = new Padding(4, 4, 4, 4);
+            btnSua_tab1.Margin = new Padding(4);
             btnSua_tab1.Name = "btnSua_tab1";
             btnSua_tab1.Size = new Size(186, 94);
             btnSua_tab1.TabIndex = 23;
             btnSua_tab1.TabStop = false;
             btnSua_tab1.Text = "Sửa";
             btnSua_tab1.UseVisualStyleBackColor = true;
-            btnSua_tab1.Click += btnSua_Click;
             // 
             // btnTim_tab1
             // 
             btnTim_tab1.Anchor = AnchorStyles.Left;
             btnTim_tab1.Location = new Point(1175, 39);
-            btnTim_tab1.Margin = new Padding(4, 4, 4, 4);
+            btnTim_tab1.Margin = new Padding(4);
             btnTim_tab1.Name = "btnTim_tab1";
             btnTim_tab1.Size = new Size(113, 42);
             btnTim_tab1.TabIndex = 26;
@@ -206,7 +238,7 @@
             // 
             txtTim_tab1.Anchor = AnchorStyles.Left;
             txtTim_tab1.Location = new Point(746, 46);
-            txtTim_tab1.Margin = new Padding(4, 4, 4, 4);
+            txtTim_tab1.Margin = new Padding(4);
             txtTim_tab1.Name = "txtTim_tab1";
             txtTim_tab1.PlaceholderText = "Tìm kiếm";
             txtTim_tab1.Size = new Size(379, 31);
@@ -230,7 +262,7 @@
             tableLayoutPanel4.Controls.Add(txtSoLuong_tab1, 1, 1);
             tableLayoutPanel4.Font = new Font("Segoe UI", 12F);
             tableLayoutPanel4.Location = new Point(4, 4);
-            tableLayoutPanel4.Margin = new Padding(4, 4, 4, 4);
+            tableLayoutPanel4.Margin = new Padding(4);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 3;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
@@ -244,19 +276,10 @@
             cboTenSanPham_tab1.Dock = DockStyle.Top;
             cboTenSanPham_tab1.FormattingEnabled = true;
             cboTenSanPham_tab1.Location = new Point(233, 4);
-            cboTenSanPham_tab1.Margin = new Padding(4, 4, 4, 4);
+            cboTenSanPham_tab1.Margin = new Padding(4);
             cboTenSanPham_tab1.Name = "cboTenSanPham_tab1";
             cboTenSanPham_tab1.Size = new Size(437, 40);
             cboTenSanPham_tab1.TabIndex = 3;
-            // 
-            // txtGia_tab1
-            // 
-            txtGia_tab1.Dock = DockStyle.Top;
-            txtGia_tab1.Location = new Point(233, 156);
-            txtGia_tab1.Margin = new Padding(4, 4, 4, 4);
-            txtGia_tab1.Name = "txtGia_tab1";
-            txtGia_tab1.Size = new Size(437, 39);
-            txtGia_tab1.TabIndex = 1;
             // 
             // search
             // 
@@ -281,6 +304,15 @@
             soluong.TabIndex = 10;
             soluong.Text = "Số lượng thêm";
             // 
+            // txtGia_tab1
+            // 
+            txtGia_tab1.Dock = DockStyle.Top;
+            txtGia_tab1.Location = new Point(233, 156);
+            txtGia_tab1.Margin = new Padding(4);
+            txtGia_tab1.Name = "txtGia_tab1";
+            txtGia_tab1.Size = new Size(437, 39);
+            txtGia_tab1.TabIndex = 1;
+            // 
             // txt_TenSanPhamtab1
             // 
             txt_TenSanPhamtab1.AutoSize = true;
@@ -297,7 +329,7 @@
             // 
             txtSoLuong_tab1.Dock = DockStyle.Top;
             txtSoLuong_tab1.Location = new Point(233, 80);
-            txtSoLuong_tab1.Margin = new Padding(4, 4, 4, 4);
+            txtSoLuong_tab1.Margin = new Padding(4);
             txtSoLuong_tab1.Name = "txtSoLuong_tab1";
             txtSoLuong_tab1.Size = new Size(437, 39);
             txtSoLuong_tab1.TabIndex = 0;
@@ -308,13 +340,22 @@
             tabPage2.Controls.Add(dgvGioHang_tab2);
             tabPage2.Controls.Add(tableLayoutPanel3);
             tabPage2.Location = new Point(4, 34);
-            tabPage2.Margin = new Padding(4, 4, 4, 4);
+            tabPage2.Margin = new Padding(4);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(4, 4, 4, 4);
+            tabPage2.Padding = new Padding(4);
             tabPage2.Size = new Size(1320, 702);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Bán hàng";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(10, 247);
+            label10.Name = "label10";
+            label10.Size = new Size(84, 25);
+            label10.TabIndex = 3;
+            label10.Text = "Giỏ hàng";
             // 
             // dgvGioHang_tab2
             // 
@@ -331,6 +372,36 @@
             dgvGioHang_tab2.RowHeadersWidth = 62;
             dgvGioHang_tab2.Size = new Size(1308, 386);
             dgvGioHang_tab2.TabIndex = 2;
+            // 
+            // colMaSP_tab2
+            // 
+            colMaSP_tab2.HeaderText = "Mã SP";
+            colMaSP_tab2.MinimumWidth = 8;
+            colMaSP_tab2.Name = "colMaSP_tab2";
+            // 
+            // colTenSanPham_tab2
+            // 
+            colTenSanPham_tab2.HeaderText = "Tên sản phẩm";
+            colTenSanPham_tab2.MinimumWidth = 8;
+            colTenSanPham_tab2.Name = "colTenSanPham_tab2";
+            // 
+            // colSoLuong_tab2
+            // 
+            colSoLuong_tab2.HeaderText = "Số lượng";
+            colSoLuong_tab2.MinimumWidth = 8;
+            colSoLuong_tab2.Name = "colSoLuong_tab2";
+            // 
+            // colDonGia_tab2
+            // 
+            colDonGia_tab2.HeaderText = "Đơn giá";
+            colDonGia_tab2.MinimumWidth = 8;
+            colDonGia_tab2.Name = "colDonGia_tab2";
+            // 
+            // colThanhTien_tab2
+            // 
+            colThanhTien_tab2.HeaderText = "Thành tiền";
+            colThanhTien_tab2.MinimumWidth = 8;
+            colThanhTien_tab2.Name = "colThanhTien_tab2";
             // 
             // tableLayoutPanel3
             // 
@@ -430,9 +501,9 @@
             tabNhapHang.Controls.Add(label5);
             tabNhapHang.Controls.Add(tableLayoutPanel1);
             tabNhapHang.Location = new Point(4, 34);
-            tabNhapHang.Margin = new Padding(4, 4, 4, 4);
+            tabNhapHang.Margin = new Padding(4);
             tabNhapHang.Name = "tabNhapHang";
-            tabNhapHang.Padding = new Padding(4, 4, 4, 4);
+            tabNhapHang.Padding = new Padding(4);
             tabNhapHang.Size = new Size(1320, 702);
             tabNhapHang.TabIndex = 2;
             tabNhapHang.Text = "Nhập hàng & thống kê";
@@ -447,7 +518,7 @@
             tableLayoutPanel2.Controls.Add(label7, 0, 2);
             tableLayoutPanel2.Controls.Add(tableLichSuNhap, 0, 3);
             tableLayoutPanel2.Location = new Point(14, 279);
-            tableLayoutPanel2.Margin = new Padding(4, 4, 4, 4);
+            tableLayoutPanel2.Margin = new Padding(4);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 4;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
@@ -467,7 +538,7 @@
             tableKhoHang.Dock = DockStyle.Fill;
             tableKhoHang.GridColor = SystemColors.HighlightText;
             tableKhoHang.Location = new Point(4, 41);
-            tableKhoHang.Margin = new Padding(4, 4, 4, 4);
+            tableKhoHang.Margin = new Padding(4);
             tableKhoHang.Name = "tableKhoHang";
             tableKhoHang.ReadOnly = true;
             tableKhoHang.RowHeadersWidth = 51;
@@ -529,7 +600,7 @@
             tableLichSuNhap.Columns.AddRange(new DataGridViewColumn[] { ColumnForMaPN, ColumnForMaSP, ColumnForTenSP, ColumnForThanhTien, ColumnForNgay });
             tableLichSuNhap.GridColor = SystemColors.HighlightText;
             tableLichSuNhap.Location = new Point(4, 229);
-            tableLichSuNhap.Margin = new Padding(4, 4, 4, 4);
+            tableLichSuNhap.Margin = new Padding(4);
             tableLichSuNhap.Name = "tableLichSuNhap";
             tableLichSuNhap.ReadOnly = true;
             tableLichSuNhap.RowHeadersWidth = 51;
@@ -605,7 +676,7 @@
             tableLayoutPanel1.Controls.Add(buttonAdd, 3, 2);
             tableLayoutPanel1.ForeColor = SystemColors.ControlText;
             tableLayoutPanel1.Location = new Point(8, 61);
-            tableLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
+            tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
@@ -618,7 +689,7 @@
             // 
             textBoxForMaPN.Dock = DockStyle.Fill;
             textBoxForMaPN.Location = new Point(181, 154);
-            textBoxForMaPN.Margin = new Padding(4, 4, 4, 4);
+            textBoxForMaPN.Margin = new Padding(4);
             textBoxForMaPN.Name = "textBoxForMaPN";
             textBoxForMaPN.Size = new Size(406, 31);
             textBoxForMaPN.TabIndex = 11;
@@ -640,7 +711,7 @@
             // 
             textBoxForDonGia.Dock = DockStyle.Fill;
             textBoxForDonGia.Location = new Point(772, 79);
-            textBoxForDonGia.Margin = new Padding(4, 4, 4, 4);
+            textBoxForDonGia.Margin = new Padding(4);
             textBoxForDonGia.Name = "textBoxForDonGia";
             textBoxForDonGia.Size = new Size(409, 31);
             textBoxForDonGia.TabIndex = 8;
@@ -649,7 +720,7 @@
             // 
             textBoxForTenSP.Dock = DockStyle.Fill;
             textBoxForTenSP.Location = new Point(181, 79);
-            textBoxForTenSP.Margin = new Padding(4, 4, 4, 4);
+            textBoxForTenSP.Margin = new Padding(4);
             textBoxForTenSP.Name = "textBoxForTenSP";
             textBoxForTenSP.Size = new Size(406, 31);
             textBoxForTenSP.TabIndex = 7;
@@ -658,7 +729,7 @@
             // 
             textBoxForSoLuong.Dock = DockStyle.Fill;
             textBoxForSoLuong.Location = new Point(772, 4);
-            textBoxForSoLuong.Margin = new Padding(4, 4, 4, 4);
+            textBoxForSoLuong.Margin = new Padding(4);
             textBoxForSoLuong.Name = "textBoxForSoLuong";
             textBoxForSoLuong.Size = new Size(409, 31);
             textBoxForSoLuong.TabIndex = 6;
@@ -719,7 +790,7 @@
             // 
             textBoxForMaSP.Dock = DockStyle.Fill;
             textBoxForMaSP.Location = new Point(181, 4);
-            textBoxForMaSP.Margin = new Padding(4, 4, 4, 4);
+            textBoxForMaSP.Margin = new Padding(4);
             textBoxForMaSP.Name = "textBoxForMaSP";
             textBoxForMaSP.Size = new Size(406, 31);
             textBoxForMaSP.TabIndex = 4;
@@ -728,88 +799,14 @@
             // 
             buttonAdd.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             buttonAdd.Location = new Point(780, 162);
-            buttonAdd.Margin = new Padding(12, 12, 12, 12);
+            buttonAdd.Margin = new Padding(12);
             buttonAdd.Name = "buttonAdd";
-            buttonAdd.Padding = new Padding(6, 6, 6, 6);
+            buttonAdd.Padding = new Padding(6);
             buttonAdd.Size = new Size(200, 52);
             buttonAdd.TabIndex = 9;
             buttonAdd.Text = "Nhập hàng";
             buttonAdd.UseVisualStyleBackColor = true;
             buttonAdd.Click += buttonAdd_Click;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("Segoe UI", 11F);
-            label8.Location = new Point(7, 260);
-            label8.Name = "label8";
-            label8.Size = new Size(206, 30);
-            label8.TabIndex = 29;
-            label8.Text = "Sản phẩm được bán";
-            label8.Click += label8_Click;
-            // 
-            // colTen_tab1
-            // 
-            colTen_tab1.HeaderText = "Tên sản phẩm";
-            colTen_tab1.MinimumWidth = 6;
-            colTen_tab1.Name = "colTen_tab1";
-            // 
-            // colSoLuong_tab1
-            // 
-            colSoLuong_tab1.HeaderText = "Số lượng sản phẩm";
-            colSoLuong_tab1.MinimumWidth = 6;
-            colSoLuong_tab1.Name = "colSoLuong_tab1";
-            // 
-            // colGia_tab1
-            // 
-            colGia_tab1.HeaderText = "Giá";
-            colGia_tab1.MinimumWidth = 6;
-            colGia_tab1.Name = "colGia_tab1";
-            // 
-            // colSoLuongBan_tab1
-            // 
-            colSoLuongBan_tab1.HeaderText = "Số lượng bán";
-            colSoLuongBan_tab1.MinimumWidth = 6;
-            colSoLuongBan_tab1.Name = "colSoLuongBan_tab1";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(10, 247);
-            label10.Name = "label10";
-            label10.Size = new Size(84, 25);
-            label10.TabIndex = 3;
-            label10.Text = "Giỏ hàng";
-            // 
-            // colMaSP_tab2
-            // 
-            colMaSP_tab2.HeaderText = "Mã SP";
-            colMaSP_tab2.MinimumWidth = 8;
-            colMaSP_tab2.Name = "colMaSP_tab2";
-            // 
-            // colTenSanPham_tab2
-            // 
-            colTenSanPham_tab2.HeaderText = "Tên sản phẩm";
-            colTenSanPham_tab2.MinimumWidth = 8;
-            colTenSanPham_tab2.Name = "colTenSanPham_tab2";
-            // 
-            // colSoLuong_tab2
-            // 
-            colSoLuong_tab2.HeaderText = "Số lượng";
-            colSoLuong_tab2.MinimumWidth = 8;
-            colSoLuong_tab2.Name = "colSoLuong_tab2";
-            // 
-            // colDonGia_tab2
-            // 
-            colDonGia_tab2.HeaderText = "Đơn giá";
-            colDonGia_tab2.MinimumWidth = 8;
-            colDonGia_tab2.Name = "colDonGia_tab2";
-            // 
-            // colThanhTien_tab2
-            // 
-            colThanhTien_tab2.HeaderText = "Thành tiền";
-            colThanhTien_tab2.MinimumWidth = 8;
-            colThanhTien_tab2.Name = "colThanhTien_tab2";
             // 
             // Form1
             // 
@@ -818,7 +815,7 @@
             BackColor = SystemColors.ActiveBorder;
             ClientSize = new Size(1328, 740);
             Controls.Add(tabControl1);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
