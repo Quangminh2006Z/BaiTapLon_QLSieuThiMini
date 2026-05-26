@@ -29,7 +29,21 @@
         private void InitializeComponent()
         {
             tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
+            tabQuanLySanPham = new TabPage();
+            btnXoa = new Button();
+            btnThem = new Button();
+            btnSua = new Button();
+            gia = new Label();
+            btnTim = new Button();
+            txtTim = new TextBox();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            cboTenSP = new ComboBox();
+            txtGia = new TextBox();
+            search = new Label();
+            soluong = new Label();
+            ten = new Label();
+            txtSoLuong = new TextBox();
+            dataGridView1 = new DataGridView();
             tabPage2 = new TabPage();
             tabNhapHang = new TabPage();
             tableLayoutPanel2 = new TableLayoutPanel();
@@ -55,7 +69,13 @@
             label4 = new Label();
             textBoxForMaSP = new TextBox();
             buttonAdd = new Button();
+            sp = new DataGridViewTextBoxColumn();
+            sl = new DataGridViewTextBoxColumn();
+            cost = new DataGridViewTextBoxColumn();
             tabControl1.SuspendLayout();
+            tabQuanLySanPham.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tabNhapHang.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tableKhoHang).BeginInit();
@@ -65,7 +85,7 @@
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabQuanLySanPham);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabNhapHang);
             tabControl1.Dock = DockStyle.Fill;
@@ -75,15 +95,176 @@
             tabControl1.Size = new Size(1315, 723);
             tabControl1.TabIndex = 5;
             // 
-            // tabPage1
+            // tabQuanLySanPham
             // 
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1307, 690);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "tabPage1";
-            tabPage1.UseVisualStyleBackColor = true;
+            tabQuanLySanPham.Controls.Add(btnXoa);
+            tabQuanLySanPham.Controls.Add(btnThem);
+            tabQuanLySanPham.Controls.Add(btnSua);
+            tabQuanLySanPham.Controls.Add(gia);
+            tabQuanLySanPham.Controls.Add(btnTim);
+            tabQuanLySanPham.Controls.Add(txtTim);
+            tabQuanLySanPham.Controls.Add(tableLayoutPanel3);
+            tabQuanLySanPham.Controls.Add(dataGridView1);
+            tabQuanLySanPham.Location = new Point(4, 29);
+            tabQuanLySanPham.Name = "tabQuanLySanPham";
+            tabQuanLySanPham.Padding = new Padding(3);
+            tabQuanLySanPham.Size = new Size(1307, 690);
+            tabQuanLySanPham.TabIndex = 0;
+            tabQuanLySanPham.Text = "Quản lý sản phẩm";
+            tabQuanLySanPham.UseVisualStyleBackColor = true;
+            tabQuanLySanPham.Click += tabQuanLySanPham_Click;
+            // 
+            // btnXoa
+            // 
+            btnXoa.Anchor = AnchorStyles.Right;
+            btnXoa.Location = new Point(1156, 235);
+            btnXoa.Name = "btnXoa";
+            btnXoa.Size = new Size(143, 75);
+            btnXoa.TabIndex = 18;
+            btnXoa.TabStop = false;
+            btnXoa.Text = "Xóa";
+            btnXoa.UseVisualStyleBackColor = true;
+            // 
+            // btnThem
+            // 
+            btnThem.Anchor = AnchorStyles.Right;
+            btnThem.Location = new Point(861, 235);
+            btnThem.Name = "btnThem";
+            btnThem.Size = new Size(137, 75);
+            btnThem.TabIndex = 16;
+            btnThem.TabStop = false;
+            btnThem.Text = "Thêm";
+            btnThem.UseVisualStyleBackColor = true;
+            // 
+            // btnSua
+            // 
+            btnSua.Anchor = AnchorStyles.Right;
+            btnSua.Location = new Point(1004, 235);
+            btnSua.Name = "btnSua";
+            btnSua.Size = new Size(149, 75);
+            btnSua.TabIndex = 17;
+            btnSua.TabStop = false;
+            btnSua.Text = "Sửa";
+            btnSua.UseVisualStyleBackColor = true;
+            // 
+            // gia
+            // 
+            gia.Anchor = AnchorStyles.Left;
+            gia.AutoSize = true;
+            gia.Location = new Point(8, 247);
+            gia.Name = "gia";
+            gia.Size = new Size(70, 20);
+            gia.TabIndex = 21;
+            gia.Text = "Tìm kiếm";
+            // 
+            // btnTim
+            // 
+            btnTim.Anchor = AnchorStyles.Left;
+            btnTim.Location = new Point(553, 235);
+            btnTim.Name = "btnTim";
+            btnTim.Size = new Size(106, 75);
+            btnTim.TabIndex = 20;
+            btnTim.Text = "Tìm";
+            btnTim.UseVisualStyleBackColor = true;
+            // 
+            // txtTim
+            // 
+            txtTim.Anchor = AnchorStyles.Left;
+            txtTim.Location = new Point(84, 244);
+            txtTim.Name = "txtTim";
+            txtTim.Size = new Size(463, 27);
+            txtTim.TabIndex = 19;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 6;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 16.666666F));
+            tableLayoutPanel3.Controls.Add(cboTenSP, 1, 0);
+            tableLayoutPanel3.Controls.Add(txtGia, 5, 0);
+            tableLayoutPanel3.Controls.Add(search, 4, 0);
+            tableLayoutPanel3.Controls.Add(soluong, 2, 0);
+            tableLayoutPanel3.Controls.Add(ten, 0, 0);
+            tableLayoutPanel3.Controls.Add(txtSoLuong, 3, 0);
+            tableLayoutPanel3.Dock = DockStyle.Top;
+            tableLayoutPanel3.Location = new Point(3, 3);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel3.Size = new Size(1301, 226);
+            tableLayoutPanel3.TabIndex = 13;
+            tableLayoutPanel3.Paint += tableLayoutPanel3_Paint;
+            // 
+            // cboTenSP
+            // 
+            cboTenSP.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            cboTenSP.FormattingEnabled = true;
+            cboTenSP.Location = new Point(219, 99);
+            cboTenSP.Name = "cboTenSP";
+            cboTenSP.Size = new Size(210, 28);
+            cboTenSP.TabIndex = 3;
+            // 
+            // txtGia
+            // 
+            txtGia.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtGia.Location = new Point(1083, 99);
+            txtGia.Name = "txtGia";
+            txtGia.Size = new Size(215, 27);
+            txtGia.TabIndex = 1;
+            // 
+            // search
+            // 
+            search.Anchor = AnchorStyles.Right;
+            search.AutoSize = true;
+            search.Location = new Point(1046, 103);
+            search.Name = "search";
+            search.Size = new Size(31, 20);
+            search.TabIndex = 11;
+            search.Text = "Giá";
+            // 
+            // soluong
+            // 
+            soluong.Anchor = AnchorStyles.Right;
+            soluong.AutoSize = true;
+            soluong.Location = new Point(576, 103);
+            soluong.Name = "soluong";
+            soluong.Size = new Size(69, 20);
+            soluong.TabIndex = 10;
+            soluong.Text = "Số lượng";
+            // 
+            // ten
+            // 
+            ten.Anchor = AnchorStyles.Right;
+            ten.AutoSize = true;
+            ten.Location = new Point(113, 103);
+            ten.Name = "ten";
+            ten.Size = new Size(100, 20);
+            ten.TabIndex = 9;
+            ten.Text = "Tên sản phẩm";
+            // 
+            // txtSoLuong
+            // 
+            txtSoLuong.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            txtSoLuong.Location = new Point(651, 99);
+            txtSoLuong.Name = "txtSoLuong";
+            txtSoLuong.Size = new Size(210, 27);
+            txtSoLuong.TabIndex = 0;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { sp, sl, cost });
+            dataGridView1.Dock = DockStyle.Bottom;
+            dataGridView1.Location = new Point(3, 316);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(1301, 371);
+            dataGridView1.TabIndex = 8;
             // 
             // tabPage2
             // 
@@ -367,6 +548,27 @@
             buttonAdd.UseVisualStyleBackColor = true;
             buttonAdd.Click += buttonAdd_Click;
             // 
+            // sp
+            // 
+            sp.HeaderText = "Tên sản phẩm";
+            sp.MinimumWidth = 6;
+            sp.Name = "sp";
+            sp.Width = 125;
+            // 
+            // sl
+            // 
+            sl.HeaderText = "Số lượng sản phẩm";
+            sl.MinimumWidth = 6;
+            sl.Name = "sl";
+            sl.Width = 125;
+            // 
+            // cost
+            // 
+            cost.HeaderText = "Giá";
+            cost.MinimumWidth = 6;
+            cost.Name = "cost";
+            cost.Width = 125;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -377,7 +579,13 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            Load += Form1_Load;
             tabControl1.ResumeLayout(false);
+            tabQuanLySanPham.ResumeLayout(false);
+            tabQuanLySanPham.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            tableLayoutPanel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             tabNhapHang.ResumeLayout(false);
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
@@ -391,7 +599,7 @@
         #endregion
 
         private TabControl tabControl1;
-        private TabPage tabPage1;
+        private TabPage tabQuanLySanPham;
         private TabPage tabPage2;
         private TabPage tabNhapHang;
         private TableLayoutPanel tableLayoutPanel1;
@@ -417,5 +625,22 @@
         private DataGridViewTextBoxColumn CollumnForNgay;
         private TableLayoutPanel tableLayoutPanel2;
         private Button buttonAdd;
+        private ComboBox cboTenSP;
+        private TextBox txtGia;
+        private TextBox txtSoLuong;
+        private DataGridView dataGridView1;
+        private Label search;
+        private Label soluong;
+        private TableLayoutPanel tableLayoutPanel3;
+        private Label ten;
+        private Button btnXoa;
+        private Button btnThem;
+        private Button btnSua;
+        private Label gia;
+        private Button btnTim;
+        private TextBox txtTim;
+        private DataGridViewTextBoxColumn sp;
+        private DataGridViewTextBoxColumn sl;
+        private DataGridViewTextBoxColumn cost;
     }
 }

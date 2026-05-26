@@ -38,18 +38,48 @@
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
-        {   
+        {
 
             if (string.IsNullOrWhiteSpace(textBoxForMaSP.Text)
                 || string.IsNullOrWhiteSpace(textBoxForTenSP.Text)
                 || string.IsNullOrWhiteSpace(textBoxForSoLuong.Text)
                 || string.IsNullOrWhiteSpace(textBoxForDonGia.Text))
             {
-                MessageBox.Show("Vui lòng nhập dữ liệu!", "Cảnh báo", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập dữ liệu!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             tableKhoHang.Rows.Add(textBoxForMaSP.Text, textBoxForTenSP.Text, textBoxForSoLuong.Text, textBoxForDonGia.Text);
             tableLichSuNhap.Rows.Add(textBoxForMaSP.Text, textBoxForTenSP.Text, textBoxForSoLuong.Text, textBoxForDonGia.Text);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel3_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cboTenSP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabQuanLySanPham_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
