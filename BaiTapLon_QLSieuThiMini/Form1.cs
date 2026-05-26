@@ -5,7 +5,7 @@ namespace BaiTapLon_QLSieuThiMini
 {
     public partial class Form1 : Form
     {
-        string connectedString = @"Data Source=.\SQLEXPRESS;Initial Catalog=QLSieuThi;Integrated Security=True;Trust Server Certificate=True";
+        string connectedString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=QLSieuThi;Integrated Security=True;Trust Server Certificate=True";
         SqlConnection con;
         SqlDataAdapter adt = new SqlDataAdapter();
         SqlCommand cmd;
