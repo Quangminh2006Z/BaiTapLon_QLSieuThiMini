@@ -66,7 +66,7 @@
             tableKhoHang = new DataGridView();
             ColumnMaSP = new DataGridViewTextBoxColumn();
             ColumnTenSP = new DataGridViewTextBoxColumn();
-            ColumnForSoLuong = new DataGridViewTextBoxColumn();
+            ColumnSoLuong = new DataGridViewTextBoxColumn();
             label6 = new Label();
             label7 = new Label();
             tableLichSuNhap = new DataGridView();
@@ -109,10 +109,9 @@
             tabControl1.Controls.Add(tabNhapHang);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
-            tabControl1.Margin = new Padding(4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1327, 740);
+            tabControl1.Size = new Size(1062, 592);
             tabControl1.TabIndex = 5;
             // 
             // tabPage1
@@ -125,11 +124,10 @@
             tabPage1.Controls.Add(btnTim);
             tabPage1.Controls.Add(txtTim);
             tabPage1.Controls.Add(tableLayoutPanel4);
-            tabPage1.Location = new Point(4, 34);
-            tabPage1.Margin = new Padding(4);
+            tabPage1.Location = new Point(4, 29);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(4);
-            tabPage1.Size = new Size(1319, 702);
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(1054, 559);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "tabPage1";
             tabPage1.UseVisualStyleBackColor = true;
@@ -139,11 +137,10 @@
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Columns.AddRange(new DataGridViewColumn[] { sp, sl, cost });
             dataGridView2.Dock = DockStyle.Bottom;
-            dataGridView2.Location = new Point(4, 429);
-            dataGridView2.Margin = new Padding(4);
+            dataGridView2.Location = new Point(3, 341);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.RowHeadersWidth = 51;
-            dataGridView2.Size = new Size(1311, 269);
+            dataGridView2.Size = new Size(1048, 215);
             dataGridView2.TabIndex = 28;
             // 
             // sp
@@ -171,20 +168,18 @@
             // 
             gia.Anchor = AnchorStyles.Left;
             gia.AutoSize = true;
-            gia.Location = new Point(18, 336);
-            gia.Margin = new Padding(4, 0, 4, 0);
+            gia.Location = new Point(14, 269);
             gia.Name = "gia";
-            gia.Size = new Size(84, 25);
+            gia.Size = new Size(70, 20);
             gia.TabIndex = 27;
             gia.Text = "Tìm kiếm";
             // 
             // btnXoa
             // 
             btnXoa.Anchor = AnchorStyles.Right;
-            btnXoa.Location = new Point(1123, 304);
-            btnXoa.Margin = new Padding(4);
+            btnXoa.Location = new Point(898, 243);
             btnXoa.Name = "btnXoa";
-            btnXoa.Size = new Size(179, 94);
+            btnXoa.Size = new Size(143, 75);
             btnXoa.TabIndex = 24;
             btnXoa.TabStop = false;
             btnXoa.Text = "Xóa";
@@ -193,10 +188,9 @@
             // btnThem
             // 
             btnThem.Anchor = AnchorStyles.Right;
-            btnThem.Location = new Point(754, 304);
-            btnThem.Margin = new Padding(4);
+            btnThem.Location = new Point(603, 243);
             btnThem.Name = "btnThem";
-            btnThem.Size = new Size(171, 94);
+            btnThem.Size = new Size(137, 75);
             btnThem.TabIndex = 22;
             btnThem.TabStop = false;
             btnThem.Text = "Thêm";
@@ -205,10 +199,9 @@
             // btnSua
             // 
             btnSua.Anchor = AnchorStyles.Right;
-            btnSua.Location = new Point(933, 304);
-            btnSua.Margin = new Padding(4);
+            btnSua.Location = new Point(746, 243);
             btnSua.Name = "btnSua";
-            btnSua.Size = new Size(186, 94);
+            btnSua.Size = new Size(149, 75);
             btnSua.TabIndex = 23;
             btnSua.TabStop = false;
             btnSua.Text = "Sửa";
@@ -217,10 +210,9 @@
             // btnTim
             // 
             btnTim.Anchor = AnchorStyles.Left;
-            btnTim.Location = new Point(533, 304);
-            btnTim.Margin = new Padding(4);
+            btnTim.Location = new Point(426, 243);
             btnTim.Name = "btnTim";
-            btnTim.Size = new Size(132, 94);
+            btnTim.Size = new Size(106, 75);
             btnTim.TabIndex = 26;
             btnTim.Text = "Tìm";
             btnTim.UseVisualStyleBackColor = true;
@@ -228,10 +220,9 @@
             // txtTim
             // 
             txtTim.Anchor = AnchorStyles.Left;
-            txtTim.Location = new Point(137, 336);
-            txtTim.Margin = new Padding(4);
+            txtTim.Location = new Point(110, 269);
             txtTim.Name = "txtTim";
-            txtTim.Size = new Size(379, 31);
+            txtTim.Size = new Size(304, 27);
             txtTim.TabIndex = 25;
             // 
             // tableLayoutPanel4
@@ -250,42 +241,38 @@
             tableLayoutPanel4.Controls.Add(ten, 0, 0);
             tableLayoutPanel4.Controls.Add(txtSoLuong, 3, 0);
             tableLayoutPanel4.Dock = DockStyle.Top;
-            tableLayoutPanel4.Location = new Point(4, 4);
-            tableLayoutPanel4.Margin = new Padding(4);
+            tableLayoutPanel4.Location = new Point(3, 3);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 282F));
-            tableLayoutPanel4.Size = new Size(1311, 282);
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 226F));
+            tableLayoutPanel4.Size = new Size(1048, 226);
             tableLayoutPanel4.TabIndex = 14;
             // 
             // cboTenSP
             // 
             cboTenSP.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             cboTenSP.FormattingEnabled = true;
-            cboTenSP.Location = new Point(222, 124);
-            cboTenSP.Margin = new Padding(4);
+            cboTenSP.Location = new Point(177, 99);
             cboTenSP.Name = "cboTenSP";
-            cboTenSP.Size = new Size(210, 33);
+            cboTenSP.Size = new Size(168, 28);
             cboTenSP.TabIndex = 3;
             // 
             // txtGia
             // 
             txtGia.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtGia.Location = new Point(1094, 125);
-            txtGia.Margin = new Padding(4);
+            txtGia.Location = new Point(873, 99);
             txtGia.Name = "txtGia";
-            txtGia.Size = new Size(213, 31);
+            txtGia.Size = new Size(172, 27);
             txtGia.TabIndex = 1;
             // 
             // search
             // 
             search.Anchor = AnchorStyles.Right;
             search.AutoSize = true;
-            search.Location = new Point(1049, 128);
-            search.Margin = new Padding(4, 0, 4, 0);
+            search.Location = new Point(836, 103);
             search.Name = "search";
-            search.Size = new Size(37, 25);
+            search.Size = new Size(31, 20);
             search.TabIndex = 11;
             search.Text = "Giá";
             // 
@@ -293,10 +280,9 @@
             // 
             soluong.Anchor = AnchorStyles.Right;
             soluong.AutoSize = true;
-            soluong.Location = new Point(565, 128);
-            soluong.Margin = new Padding(4, 0, 4, 0);
+            soluong.Location = new Point(450, 103);
             soluong.Name = "soluong";
-            soluong.Size = new Size(85, 25);
+            soluong.Size = new Size(69, 20);
             soluong.TabIndex = 10;
             soluong.Text = "Số lượng";
             // 
@@ -304,31 +290,28 @@
             // 
             ten.Anchor = AnchorStyles.Right;
             ten.AutoSize = true;
-            ten.Location = new Point(93, 128);
-            ten.Margin = new Padding(4, 0, 4, 0);
+            ten.Location = new Point(71, 103);
             ten.Name = "ten";
-            ten.Size = new Size(121, 25);
+            ten.Size = new Size(100, 20);
             ten.TabIndex = 9;
             ten.Text = "Tên sản phẩm";
             // 
             // txtSoLuong
             // 
             txtSoLuong.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            txtSoLuong.Location = new Point(658, 125);
-            txtSoLuong.Margin = new Padding(4);
+            txtSoLuong.Location = new Point(525, 99);
             txtSoLuong.Name = "txtSoLuong";
-            txtSoLuong.Size = new Size(210, 31);
+            txtSoLuong.Size = new Size(168, 27);
             txtSoLuong.TabIndex = 0;
             // 
             // tabPage2
             // 
             tabPage2.Controls.Add(dataGridView1);
             tabPage2.Controls.Add(tableLayoutPanel3);
-            tabPage2.Location = new Point(4, 34);
-            tabPage2.Margin = new Padding(4);
+            tabPage2.Location = new Point(4, 29);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(4);
-            tabPage2.Size = new Size(1319, 702);
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(1054, 559);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Bán hàng";
             tabPage2.UseVisualStyleBackColor = true;
@@ -342,10 +325,11 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ColumnMaSPTheThanhToan, ColumnTenSanPhamTheThanhToan, ColumnSoLuongTheThanhToan, ColumnDonGiaTheThanhToan, ColumnThanhTienTheThanhToan });
-            dataGridView1.Location = new Point(4, 266);
+            dataGridView1.Location = new Point(3, 213);
+            dataGridView1.Margin = new Padding(2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 62;
-            dataGridView1.Size = new Size(1311, 432);
+            dataGridView1.Size = new Size(1049, 346);
             dataGridView1.TabIndex = 2;
             // 
             // ColumnMaSPTheThanhToan
@@ -392,14 +376,15 @@
             tableLayoutPanel3.Controls.Add(textBoxForSoLuongMua, 1, 1);
             tableLayoutPanel3.Controls.Add(buttonThanhToanTab2, 3, 1);
             tableLayoutPanel3.Controls.Add(buttonThemSanPhamTab2, 3, 0);
-            tableLayoutPanel3.Location = new Point(8, 23);
+            tableLayoutPanel3.Location = new Point(6, 18);
+            tableLayoutPanel3.Margin = new Padding(2);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 2;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel3.Size = new Size(1227, 199);
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 16F));
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Absolute, 16F));
+            tableLayoutPanel3.Size = new Size(982, 159);
             tableLayoutPanel3.TabIndex = 0;
             // 
             // lblSanPham
@@ -407,9 +392,10 @@
             lblSanPham.AutoSize = true;
             lblSanPham.Dock = DockStyle.Fill;
             lblSanPham.Font = new Font("Segoe UI", 12F);
-            lblSanPham.Location = new Point(3, 0);
+            lblSanPham.Location = new Point(2, 0);
+            lblSanPham.Margin = new Padding(2, 0, 2, 0);
             lblSanPham.Name = "lblSanPham";
-            lblSanPham.Size = new Size(283, 99);
+            lblSanPham.Size = new Size(227, 79);
             lblSanPham.TabIndex = 0;
             lblSanPham.Text = "Sản phẩm";
             // 
@@ -418,9 +404,10 @@
             label9.AutoSize = true;
             label9.Dock = DockStyle.Fill;
             label9.Font = new Font("Segoe UI", 12F);
-            label9.Location = new Point(3, 99);
+            label9.Location = new Point(2, 79);
+            label9.Margin = new Padding(2, 0, 2, 0);
             label9.Name = "label9";
-            label9.Size = new Size(283, 100);
+            label9.Size = new Size(227, 80);
             label9.TabIndex = 1;
             label9.Text = "Số lượng mua";
             // 
@@ -428,25 +415,28 @@
             // 
             comboBoxForTenSP.Dock = DockStyle.Fill;
             comboBoxForTenSP.FormattingEnabled = true;
-            comboBoxForTenSP.Location = new Point(292, 3);
+            comboBoxForTenSP.Location = new Point(233, 2);
+            comboBoxForTenSP.Margin = new Padding(2);
             comboBoxForTenSP.Name = "comboBoxForTenSP";
-            comboBoxForTenSP.Size = new Size(490, 33);
+            comboBoxForTenSP.Size = new Size(393, 28);
             comboBoxForTenSP.TabIndex = 2;
             // 
             // textBoxForSoLuongMua
             // 
             textBoxForSoLuongMua.Dock = DockStyle.Fill;
-            textBoxForSoLuongMua.Location = new Point(292, 102);
+            textBoxForSoLuongMua.Location = new Point(233, 81);
+            textBoxForSoLuongMua.Margin = new Padding(2);
             textBoxForSoLuongMua.Name = "textBoxForSoLuongMua";
-            textBoxForSoLuongMua.Size = new Size(490, 31);
+            textBoxForSoLuongMua.Size = new Size(393, 27);
             textBoxForSoLuongMua.TabIndex = 3;
             // 
             // buttonThanhToanTab2
             // 
             buttonThanhToanTab2.Dock = DockStyle.Fill;
-            buttonThanhToanTab2.Location = new Point(1024, 102);
+            buttonThanhToanTab2.Location = new Point(819, 81);
+            buttonThanhToanTab2.Margin = new Padding(2);
             buttonThanhToanTab2.Name = "buttonThanhToanTab2";
-            buttonThanhToanTab2.Size = new Size(200, 94);
+            buttonThanhToanTab2.Size = new Size(161, 76);
             buttonThanhToanTab2.TabIndex = 1;
             buttonThanhToanTab2.Text = "Thanh toán";
             buttonThanhToanTab2.UseVisualStyleBackColor = true;
@@ -454,9 +444,10 @@
             // buttonThemSanPhamTab2
             // 
             buttonThemSanPhamTab2.Dock = DockStyle.Fill;
-            buttonThemSanPhamTab2.Location = new Point(1024, 3);
+            buttonThemSanPhamTab2.Location = new Point(819, 2);
+            buttonThemSanPhamTab2.Margin = new Padding(2);
             buttonThemSanPhamTab2.Name = "buttonThemSanPhamTab2";
-            buttonThemSanPhamTab2.Size = new Size(200, 93);
+            buttonThemSanPhamTab2.Size = new Size(161, 75);
             buttonThemSanPhamTab2.TabIndex = 3;
             buttonThemSanPhamTab2.Text = "Thêm sản phẩm";
             buttonThemSanPhamTab2.UseVisualStyleBackColor = true;
@@ -468,11 +459,10 @@
             tabNhapHang.Controls.Add(tableLayoutPanel2);
             tabNhapHang.Controls.Add(label5);
             tabNhapHang.Controls.Add(tableLayoutPanel1);
-            tabNhapHang.Location = new Point(4, 34);
-            tabNhapHang.Margin = new Padding(4);
+            tabNhapHang.Location = new Point(4, 29);
             tabNhapHang.Name = "tabNhapHang";
-            tabNhapHang.Padding = new Padding(4);
-            tabNhapHang.Size = new Size(1319, 702);
+            tabNhapHang.Padding = new Padding(3);
+            tabNhapHang.Size = new Size(1054, 559);
             tabNhapHang.TabIndex = 2;
             tabNhapHang.Text = "Nhập hàng & thống kê";
             // 
@@ -485,15 +475,14 @@
             tableLayoutPanel2.Controls.Add(label6, 0, 0);
             tableLayoutPanel2.Controls.Add(label7, 0, 2);
             tableLayoutPanel2.Controls.Add(tableLichSuNhap, 0, 3);
-            tableLayoutPanel2.Location = new Point(14, 279);
-            tableLayoutPanel2.Margin = new Padding(4);
+            tableLayoutPanel2.Location = new Point(11, 223);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 4;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
-            tableLayoutPanel2.Size = new Size(1295, 377);
+            tableLayoutPanel2.Size = new Size(1036, 302);
             tableLayoutPanel2.TabIndex = 12;
             // 
             // tableKhoHang
@@ -502,15 +491,14 @@
             tableKhoHang.AllowUserToDeleteRows = false;
             tableKhoHang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             tableKhoHang.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            tableKhoHang.Columns.AddRange(new DataGridViewColumn[] { ColumnMaSP, ColumnTenSP, ColumnForSoLuong });
+            tableKhoHang.Columns.AddRange(new DataGridViewColumn[] { ColumnMaSP, ColumnTenSP, ColumnSoLuong });
             tableKhoHang.Dock = DockStyle.Fill;
             tableKhoHang.GridColor = SystemColors.HighlightText;
-            tableKhoHang.Location = new Point(4, 41);
-            tableKhoHang.Margin = new Padding(4);
+            tableKhoHang.Location = new Point(3, 33);
             tableKhoHang.Name = "tableKhoHang";
             tableKhoHang.ReadOnly = true;
             tableKhoHang.RowHeadersWidth = 51;
-            tableKhoHang.Size = new Size(1287, 142);
+            tableKhoHang.Size = new Size(1030, 114);
             tableKhoHang.TabIndex = 9;
             // 
             // ColumnMaSP
@@ -527,22 +515,21 @@
             ColumnTenSP.Name = "ColumnTenSP";
             ColumnTenSP.ReadOnly = true;
             // 
-            // ColumnForSoLuong
+            // ColumnSoLuong
             // 
-            ColumnForSoLuong.HeaderText = "Số lượng tồn";
-            ColumnForSoLuong.MinimumWidth = 6;
-            ColumnForSoLuong.Name = "ColumnForSoLuong";
-            ColumnForSoLuong.ReadOnly = true;
+            ColumnSoLuong.HeaderText = "Số lượng tồn";
+            ColumnSoLuong.MinimumWidth = 6;
+            ColumnSoLuong.Name = "ColumnSoLuong";
+            ColumnSoLuong.ReadOnly = true;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Dock = DockStyle.Bottom;
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(4, 5);
-            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Location = new Point(3, 2);
             label6.Name = "label6";
-            label6.Size = new Size(1287, 32);
+            label6.Size = new Size(1030, 28);
             label6.TabIndex = 8;
             label6.Text = "Kho hàng: ";
             // 
@@ -551,10 +538,9 @@
             label7.AutoSize = true;
             label7.Dock = DockStyle.Bottom;
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(4, 192);
-            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Location = new Point(3, 152);
             label7.Name = "label7";
-            label7.Size = new Size(1287, 32);
+            label7.Size = new Size(1030, 28);
             label7.TabIndex = 10;
             label7.Text = "Lịch sử nhập hàng:";
             // 
@@ -567,12 +553,11 @@
             tableLichSuNhap.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             tableLichSuNhap.Columns.AddRange(new DataGridViewColumn[] { ColumnForMaPN, ColumnForMaSP, ColumnForTenSP, ColumnForThanhTien, ColumnForNgay });
             tableLichSuNhap.GridColor = SystemColors.HighlightText;
-            tableLichSuNhap.Location = new Point(4, 228);
-            tableLichSuNhap.Margin = new Padding(4);
+            tableLichSuNhap.Location = new Point(3, 183);
             tableLichSuNhap.Name = "tableLichSuNhap";
             tableLichSuNhap.ReadOnly = true;
             tableLichSuNhap.RowHeadersWidth = 51;
-            tableLichSuNhap.Size = new Size(1287, 145);
+            tableLichSuNhap.Size = new Size(1030, 116);
             tableLichSuNhap.TabIndex = 11;
             tableLichSuNhap.CellContentClick += dataGridView2_CellContentClick;
             // 
@@ -599,7 +584,7 @@
             // 
             // ColumnForThanhTien
             // 
-            ColumnForThanhTien.HeaderText = "Thành tiền nhập hàng";
+            ColumnForThanhTien.HeaderText = "Thành tiền nhập (vnđ)";
             ColumnForThanhTien.MinimumWidth = 6;
             ColumnForThanhTien.Name = "ColumnForThanhTien";
             ColumnForThanhTien.ReadOnly = true;
@@ -615,10 +600,9 @@
             // 
             label5.Dock = DockStyle.Top;
             label5.Font = new Font("Segoe UI", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(4, 4);
-            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Location = new Point(3, 3);
             label5.Name = "label5";
-            label5.Size = new Size(1311, 39);
+            label5.Size = new Size(1048, 31);
             label5.TabIndex = 7;
             label5.Text = "Nhập sản phẩm mới vào kho";
             label5.TextAlign = ContentAlignment.MiddleCenter;
@@ -643,63 +627,57 @@
             tableLayoutPanel1.Controls.Add(textBoxForMaSP, 1, 0);
             tableLayoutPanel1.Controls.Add(buttonAdd, 3, 2);
             tableLayoutPanel1.ForeColor = SystemColors.ControlText;
-            tableLayoutPanel1.Location = new Point(8, 61);
-            tableLayoutPanel1.Margin = new Padding(4);
+            tableLayoutPanel1.Location = new Point(6, 49);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 3;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            tableLayoutPanel1.Size = new Size(1185, 228);
+            tableLayoutPanel1.Size = new Size(948, 182);
             tableLayoutPanel1.TabIndex = 6;
             // 
             // textBoxForMaPN
             // 
             textBoxForMaPN.Dock = DockStyle.Fill;
-            textBoxForMaPN.Location = new Point(181, 154);
-            textBoxForMaPN.Margin = new Padding(4);
+            textBoxForMaPN.Location = new Point(145, 123);
             textBoxForMaPN.Name = "textBoxForMaPN";
-            textBoxForMaPN.Size = new Size(406, 31);
+            textBoxForMaPN.Size = new Size(325, 27);
             textBoxForMaPN.TabIndex = 11;
             // 
             // labelForMaPN
             // 
             labelForMaPN.AutoSize = true;
             labelForMaPN.Dock = DockStyle.Top;
-            labelForMaPN.Font = new Font("Segoe UI", 12F);
-            labelForMaPN.Location = new Point(4, 150);
-            labelForMaPN.Margin = new Padding(4, 0, 4, 0);
+            labelForMaPN.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            labelForMaPN.Location = new Point(3, 120);
             labelForMaPN.Name = "labelForMaPN";
-            labelForMaPN.Size = new Size(169, 64);
+            labelForMaPN.Size = new Size(136, 25);
             labelForMaPN.TabIndex = 10;
-            labelForMaPN.Text = "Mã phiểu nhập: ";
+            labelForMaPN.Text = "Mã phiếu nhập: ";
             labelForMaPN.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // textBoxForDonGia
             // 
             textBoxForDonGia.Dock = DockStyle.Fill;
-            textBoxForDonGia.Location = new Point(772, 79);
-            textBoxForDonGia.Margin = new Padding(4);
+            textBoxForDonGia.Location = new Point(618, 63);
             textBoxForDonGia.Name = "textBoxForDonGia";
-            textBoxForDonGia.Size = new Size(409, 31);
+            textBoxForDonGia.Size = new Size(327, 27);
             textBoxForDonGia.TabIndex = 8;
             // 
             // textBoxForTenSP
             // 
             textBoxForTenSP.Dock = DockStyle.Fill;
-            textBoxForTenSP.Location = new Point(181, 79);
-            textBoxForTenSP.Margin = new Padding(4);
+            textBoxForTenSP.Location = new Point(145, 63);
             textBoxForTenSP.Name = "textBoxForTenSP";
-            textBoxForTenSP.Size = new Size(406, 31);
+            textBoxForTenSP.Size = new Size(325, 27);
             textBoxForTenSP.TabIndex = 7;
             // 
             // textBoxForSoLuong
             // 
             textBoxForSoLuong.Dock = DockStyle.Fill;
-            textBoxForSoLuong.Location = new Point(772, 4);
-            textBoxForSoLuong.Margin = new Padding(4);
+            textBoxForSoLuong.Location = new Point(618, 3);
             textBoxForSoLuong.Name = "textBoxForSoLuong";
-            textBoxForSoLuong.Size = new Size(409, 31);
+            textBoxForSoLuong.Size = new Size(327, 27);
             textBoxForSoLuong.TabIndex = 6;
             // 
             // label1
@@ -707,10 +685,9 @@
             label1.AutoSize = true;
             label1.Dock = DockStyle.Top;
             label1.Font = new Font("Segoe UI", 12F);
-            label1.Location = new Point(4, 0);
-            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(169, 32);
+            label1.Size = new Size(136, 28);
             label1.TabIndex = 0;
             label1.Text = "Mã sản phẩm: ";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -720,10 +697,9 @@
             label2.AutoSize = true;
             label2.Dock = DockStyle.Top;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(595, 75);
-            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Location = new Point(476, 60);
             label2.Name = "label2";
-            label2.Size = new Size(169, 32);
+            label2.Size = new Size(136, 28);
             label2.TabIndex = 2;
             label2.Text = "Đơn giá: ";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -733,10 +709,9 @@
             label3.AutoSize = true;
             label3.Dock = DockStyle.Top;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(4, 75);
-            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Location = new Point(3, 60);
             label3.Name = "label3";
-            label3.Size = new Size(169, 32);
+            label3.Size = new Size(136, 28);
             label3.TabIndex = 3;
             label3.Text = "Tên sản phẩm: ";
             label3.TextAlign = ContentAlignment.MiddleCenter;
@@ -746,10 +721,9 @@
             label4.AutoSize = true;
             label4.Dock = DockStyle.Top;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(595, 0);
-            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Location = new Point(476, 0);
             label4.Name = "label4";
-            label4.Size = new Size(169, 32);
+            label4.Size = new Size(136, 28);
             label4.TabIndex = 1;
             label4.Text = "Số lượng: ";
             label4.TextAlign = ContentAlignment.MiddleCenter;
@@ -757,20 +731,19 @@
             // textBoxForMaSP
             // 
             textBoxForMaSP.Dock = DockStyle.Fill;
-            textBoxForMaSP.Location = new Point(181, 4);
-            textBoxForMaSP.Margin = new Padding(4);
+            textBoxForMaSP.Location = new Point(145, 3);
             textBoxForMaSP.Name = "textBoxForMaSP";
-            textBoxForMaSP.Size = new Size(406, 31);
+            textBoxForMaSP.Size = new Size(325, 27);
             textBoxForMaSP.TabIndex = 4;
             // 
             // buttonAdd
             // 
             buttonAdd.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonAdd.Location = new Point(780, 162);
-            buttonAdd.Margin = new Padding(12);
+            buttonAdd.Location = new Point(625, 130);
+            buttonAdd.Margin = new Padding(10);
             buttonAdd.Name = "buttonAdd";
-            buttonAdd.Padding = new Padding(6);
-            buttonAdd.Size = new Size(200, 52);
+            buttonAdd.Padding = new Padding(5);
+            buttonAdd.Size = new Size(160, 42);
             buttonAdd.TabIndex = 9;
             buttonAdd.Text = "Nhập hàng";
             buttonAdd.UseVisualStyleBackColor = true;
@@ -778,12 +751,11 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveBorder;
-            ClientSize = new Size(1327, 740);
+            ClientSize = new Size(1062, 592);
             Controls.Add(tabControl1);
-            Margin = new Padding(4);
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
@@ -825,20 +797,12 @@
         private Label label5;
         private DataGridView tableKhoHang;
         private Label label6;
-        private DataGridViewTextBoxColumn ColumnMaSP;
-        private DataGridViewTextBoxColumn ColumnTenSP;
-        private DataGridViewTextBoxColumn ColumnForSoLuong;
         private DataGridView tableLichSuNhap;
         private Label label7;
         private TableLayoutPanel tableLayoutPanel2;
         private Button buttonAdd;
         private TextBox textBoxForMaPN;
         private Label labelForMaPN;
-        private DataGridViewTextBoxColumn ColumnForMaPN;
-        private DataGridViewTextBoxColumn ColumnForMaSP;
-        private DataGridViewTextBoxColumn ColumnForTenSP;
-        private DataGridViewTextBoxColumn ColumnForThanhTien;
-        private DataGridViewTextBoxColumn ColumnForNgay;
         private Button buttonThanhToanTab2;
         private TableLayoutPanel tableLayoutPanel3;
         private Label lblSanPham;
@@ -869,5 +833,13 @@
         private DataGridViewTextBoxColumn sl;
         private DataGridViewTextBoxColumn cost;
         private Label gia;
+        private DataGridViewTextBoxColumn ColumnMaSP;
+        private DataGridViewTextBoxColumn ColumnTenSP;
+        private DataGridViewTextBoxColumn ColumnSoLuong;
+        private DataGridViewTextBoxColumn ColumnForMaPN;
+        private DataGridViewTextBoxColumn ColumnForMaSP;
+        private DataGridViewTextBoxColumn ColumnForTenSP;
+        private DataGridViewTextBoxColumn ColumnForThanhTien;
+        private DataGridViewTextBoxColumn ColumnForNgay;
     }
 }
