@@ -5,12 +5,17 @@ namespace BaiTapLon_QLSieuThiMini
 {
     public partial class Form1 : Form
     {
-        string connectedString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=QLSieuThi;Integrated Security=True;Trust Server Certificate=True";
+        //Các biến tương tác csdl
+        string connectedString = @"Data Source=.\SQLEXPRESS;Initial Catalog=QLSieuThi;Integrated Security=True;Trust Server Certificate=True";
         SqlConnection con;
         SqlDataAdapter adt = new SqlDataAdapter();
         SqlCommand cmd;
-        DataTable dt = new DataTable();
-        
+
+        //Các biến lưu thông tin các bảng
+        DataTable dtLichSuNhap = new DataTable();
+        DataTable dtKhoHang = new DataTable();
+
+
         public Form1()
         {
             InitializeComponent();
@@ -24,19 +29,35 @@ namespace BaiTapLon_QLSieuThiMini
             tableLichSuNhap.Columns["ColumnForThanhTien"].DataPropertyName = "ThanhTien";
             tableLichSuNhap.Columns["ColumnForNgay"].DataPropertyName = "NgayNhap";
 
+            tableKhoHang.AutoGenerateColumns = false;
+            tableKhoHang.Columns["ColumnMaSP"].DataPropertyName = "MaSP";
+            tableKhoHang.Columns["ColumnTenSP"].DataPropertyName = "TenSP";
+            tableKhoHang.Columns["ColumnSoLuong"].DataPropertyName = "SoLuongTrongKho";
+
             con = new SqlConnection(connectedString);
             try
             {
+                //Mở kết nối với CSDL
                 con.Open();
-                // Thay đổi câu truy vấn để SQL tự tính Thành tiền = Số Lượng * Cột Giá Nhập (Tuỳ tên cột bạn đang lưu tên là gì, ở đây lấy theo SoLuongNhap và GiaNhap trong DB)
-                cmd = new SqlCommand("Select *, (SoLuongNhap * GiaNhap) as ThanhTien from LichSuNhapHang", con);
-                adt = new SqlDataAdapter(cmd);
-                adt.Fill(dt);
-                tableLichSuNhap.DataSource = dt;
+
+                //Lấy dữ liệu từ LichSuNhapHang trong database
+                SqlCommand cmdLichSuNhap = new SqlCommand("Select *, (SoLuongNhap * GiaNhap) as ThanhTien from LichSuNhapHang", con);
+                adt = new SqlDataAdapter(cmdLichSuNhap);
+                adt.Fill(dtLichSuNhap);
+                tableLichSuNhap.DataSource = dtLichSuNhap;
+
+                //Lấy dữ liệu từ SanPhamTrongKho trong database
+                SqlCommand cmdKhoHang = new SqlCommand("Select * from SanPhamTrongKho", con);
+                SqlDataAdapter adtKhoHang = new SqlDataAdapter(cmdKhoHang);
+                adtKhoHang.Fill(dtKhoHang);
+                tableKhoHang.DataSource = dtKhoHang;
+
+                //Đóng kết nối 
                 con.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
+                //Phát hiện lỗi khi kết nối cơ sở dữ liệu
                 MessageBox.Show(ex.Message);
             }
         }
@@ -51,45 +72,95 @@ namespace BaiTapLon_QLSieuThiMini
 
         }
 
-
-
-     
-
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
-        {   
+        {
 
+            //Kiểm tra không để trống dữ liệu
             if (string.IsNullOrWhiteSpace(textBoxForMaSP.Text)
                 || string.IsNullOrWhiteSpace(textBoxForTenSP.Text)
                 || string.IsNullOrWhiteSpace(textBoxForSoLuong.Text)
                 || string.IsNullOrWhiteSpace(textBoxForDonGia.Text)
                 || string.IsNullOrWhiteSpace(textBoxForMaPN.Text))
             {
-                MessageBox.Show("Vui lòng nhập dữ liệu!", "Cảnh báo", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng nhập dữ liệu!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Ép kiểu để tính Thành Tiền
             if (int.TryParse(textBoxForSoLuong.Text, out int soLuong) && int.TryParse(textBoxForDonGia.Text, out int donGia))
             {
-                decimal thanhTien = soLuong * donGia;
+                int thanhTien = soLuong * donGia;
+                string maSP = textBoxForMaSP.Text.Trim();
+                string tenSP = textBoxForTenSP.Text.Trim();
+                string maPN = textBoxForMaPN.Text.Trim();
+                DateTime ngayNhap = DateTime.Now;
+                //Mảng lưu thông tin các mã sản phẩm sẵn có bằng cách duyệt qua các MaSP
+                DataRow[] foundRowMaSP = dtKhoHang.Select($"MaSP = '{textBoxForMaSP.Text.Trim()}'");
 
-                // Thêm vào bảng Kho Hàng
-                tableKhoHang.Rows.Add(textBoxForMaSP.Text, textBoxForTenSP.Text, textBoxForSoLuong.Text);
+                //Nếu mã sản phẩm đã tồn tại ( Mảng tìm được >0 sản phẩm)
+                if (foundRowMaSP.Length > 0)
+                {
 
-                // Ở đây, nếu tableLichSuNhap đã được set DataSource = dt, bạn phải thao tác add qua dt (kiểu dt.Rows.Add(...)) 
-                // Thay vì tableLichSuNhap.Rows.Add() sẽ gây lỗi databinding.
-                // Nếu chưa bind, code hiển thị sẽ như sau:
-                // tableLichSuNhap.Rows.Add(textBoxForMaPN.Text, textBoxForMaSP.Text, textBoxForTenSP.Text, thanhTien, DateTime.Now.ToString("dd/MM/yyyy"));
+                    // Nếu sản phẩm đã tồn tại, tiến hành cộng dồn số lượng
+
+                    int soLuongHienTai = Convert.ToInt32(foundRowMaSP[0]["SoLuongTrongKho"]);
+                    foundRowMaSP[0]["SoLuongTrongKho"] = soLuongHienTai + soLuong;
+                    MessageBox.Show("Vì sản phẩm đã có sẵn, số lượng tồn được cộng thêm!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    DataRow newKhoHangRow = dtKhoHang.NewRow();
+                    newKhoHangRow["MaSP"] = textBoxForMaSP.Text;
+                    newKhoHangRow["TenSP"] = textBoxForTenSP.Text;
+                    newKhoHangRow["SoLuongTrongKho"] = soLuong;
+                    dtKhoHang.Rows.Add(newKhoHangRow);
+                }
+
+
+                //Thêm vào bảng lịch sử nhập
+                DataRow[] foundRowMaPN = dtLichSuNhap.Select($"MaPN = '{textBoxForMaPN.Text.Trim()}'");
+
+                if (foundRowMaPN.Length > 0)
+                {
+                    MessageBox.Show("Phiếu nhập sẽ không được thêm vào bảng", "Mã phiếu nhập đã tồn tại!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    DataRow newLichSuNhapRow = dtLichSuNhap.NewRow();
+                    newLichSuNhapRow["MaPN"] = textBoxForMaPN.Text;
+                    newLichSuNhapRow["MaSP"] = textBoxForMaSP.Text;
+                    newLichSuNhapRow["TenSP"] = textBoxForTenSP.Text;
+                    newLichSuNhapRow["ThanhTien"] = thanhTien;
+                    newLichSuNhapRow["NgayNhap"] = DateTime.Now;
+                    dtLichSuNhap.Rows.Add(newLichSuNhapRow);
+                }
+                MessageBox.Show("Dữ liệu đã được nhập!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBoxForDonGia.Clear();
+                textBoxForMaPN.Clear();
+                textBoxForMaSP.Clear();
+                textBoxForSoLuong.Clear();
+                textBoxForTenSP.Clear();
             }
             else
             {
                 MessageBox.Show("Số lượng và Đơn giá phải là số hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView2_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
