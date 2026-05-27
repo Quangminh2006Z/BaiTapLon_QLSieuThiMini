@@ -14,13 +14,15 @@ namespace BaiTapLon_QLSieuThiMini
         //Các biến lưu thông tin các bảng
         DataTable dtLichSuNhap = new DataTable();
         DataTable dtKhoHang = new DataTable();
-
+        DataTable dtGioHang = new DataTable();
 
         public Form1()
         {
             InitializeComponent();
             con = new SqlConnection(connectedString);
+            TaoBangGioHang();
             LoadSanPhamLenComboBoxBanHang();
+            btnThemSanPham_tab2.Click += btnThemSanPham_tab2_Click;
             //Nguyẽn vũ quang minh
             // Tắt tự động tạo cột
             tableLichSuNhap.AutoGenerateColumns = false;
@@ -304,10 +306,240 @@ namespace BaiTapLon_QLSieuThiMini
                 }
             }
         }
+        private void btnThemSanPham_tab2_Click(object sender, EventArgs e)
+        {
+            if (cboSanPham_tab2.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn sản phẩm!");
+                return;
+            }
 
+            if (string.IsNullOrWhiteSpace(txtSoLuongMua_tab2.Text))
+            {
+                MessageBox.Show("Vui lòng nhập số lượng mua!");
+                return;
+            }
+
+            if (!int.TryParse(txtSoLuongMua_tab2.Text.Trim(), out int soLuongMua))
+            {
+                MessageBox.Show("Số lượng mua phải là số nguyên!");
+                return;
+            }
+
+            if (soLuongMua <= 0)
+            {
+                MessageBox.Show("Số lượng mua phải lớn hơn 0!");
+                return;
+            }
+
+            DataRowView selectedRow = cboSanPham_tab2.SelectedItem as DataRowView;
+
+            if (selectedRow == null)
+            {
+                MessageBox.Show("Dữ liệu sản phẩm không hợp lệ!");
+                return;
+            }
+
+            string maSP = selectedRow["MaSP"].ToString();
+            string tenSP = selectedRow["TenSP"].ToString();
+            int soLuongDangBan = Convert.ToInt32(selectedRow["SoLuongDangBan"]);
+            int giaBan = Convert.ToInt32(selectedRow["GiaBan"]);
+
+            DataRow[] foundRows = dtGioHang.Select($"MaSP = '{maSP}'");
+
+            int soLuongDaCoTrongGio = 0;
+
+            if (foundRows.Length > 0)
+            {
+                soLuongDaCoTrongGio = Convert.ToInt32(foundRows[0]["SoLuong"]);
+            }
+
+            if (soLuongDaCoTrongGio + soLuongMua > soLuongDangBan)
+            {
+                MessageBox.Show("Không được bán vượt quá số lượng sản phẩm đang bán!");
+                return;
+            }
+
+            if (foundRows.Length > 0)
+            {
+                int soLuongMoi = soLuongDaCoTrongGio + soLuongMua;
+
+                foundRows[0]["SoLuong"] = soLuongMoi;
+                foundRows[0]["ThanhTien"] = soLuongMoi * giaBan;
+            }
+            else
+            {
+                DataRow newRow = dtGioHang.NewRow();
+
+                newRow["MaSP"] = maSP;
+                newRow["TenSP"] = tenSP;
+                newRow["SoLuong"] = soLuongMua;
+                newRow["DonGia"] = giaBan;
+                newRow["ThanhTien"] = soLuongMua * giaBan;
+
+                dtGioHang.Rows.Add(newRow);
+            }
+            CapNhatThongTinHoaDon();
+            txtSoLuongMua_tab2.Clear();
+            cboSanPham_tab2.SelectedIndex = -1;
+        }
+        private void TaoBangGioHang()
+        {
+            dtGioHang.Columns.Add("MaSP", typeof(string));
+            dtGioHang.Columns.Add("TenSP", typeof(string));
+            dtGioHang.Columns.Add("SoLuong", typeof(int));
+            dtGioHang.Columns.Add("DonGia", typeof(int));
+            dtGioHang.Columns.Add("ThanhTien", typeof(int));
+
+            dgvGioHang_tab2.AutoGenerateColumns = false;
+
+            colMaSP_tab2.DataPropertyName = "MaSP";
+            colTenSanPham_tab2.DataPropertyName = "TenSP";
+            colSoLuong_tab2.DataPropertyName = "SoLuong";
+            colDonGia_tab2.DataPropertyName = "DonGia";
+            colThanhTien_tab2.DataPropertyName = "ThanhTien";
+
+            dgvGioHang_tab2.DataSource = dtGioHang;
+        }
+        private void CapNhatThongTinHoaDon()
+        {
+            int soDongSanPham = dtGioHang.Rows.Count;
+            int tongTien = 0;
+
+            foreach (DataRow row in dtGioHang.Rows)
+            {
+                tongTien += Convert.ToInt32(row["ThanhTien"]);
+            }
+
+            lblSoLuongHoaDon_tab2.Text = "Số mặt hàng: " + soDongSanPham;
+            lblTongTien_tab2.Text = "Tổng tiền: " + tongTien.ToString("N0") + " VNĐ";
+        }
+        private int LayTongTienHoaDon()
+        {
+            int tongTien = 0;
+
+            foreach (DataRow row in dtGioHang.Rows)
+            {
+                tongTien += Convert.ToInt32(row["ThanhTien"]);
+            }
+
+            return tongTien;
+        }
         #endregion
+
+        private void btnThanhToan_tab2_Click(object sender, EventArgs e)
+        { 
+            if (dtGioHang.Rows.Count == 0)
+            {
+                MessageBox.Show("Giỏ hàng đang trống!", "Cảnh báo");
+                return;
+            }
+
+            string maHD = "HD" + DateTime.Now.ToString("yyyyMMddHHmmss");
+            DateTime ngayIn = DateTime.Now;
+            int tongTien = LayTongTienHoaDon();
+
+            try
+            {
+                if (con == null)
+                {
+                    con = new SqlConnection(connectedString);
+                }
+
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                using (SqlTransaction trans = con.BeginTransaction())
+                {
+                    try
+                    {
+                        // 1. Lưu hóa đơn
+                        string insertHoaDonSql = @"
+                    INSERT INTO HoaDon(MaHD, NgayIn, TongTien)
+                    VALUES (@MaHD, @NgayIn, @TongTien)";
+
+                        using (SqlCommand cmdInsertHoaDon = new SqlCommand(insertHoaDonSql, con, trans))
+                        {
+                            cmdInsertHoaDon.Parameters.AddWithValue("@MaHD", maHD);
+                            cmdInsertHoaDon.Parameters.AddWithValue("@NgayIn", ngayIn);
+                            cmdInsertHoaDon.Parameters.AddWithValue("@TongTien", tongTien);
+                            cmdInsertHoaDon.ExecuteNonQuery();
+                        }
+
+                        // 2. Trừ số lượng sản phẩm đang bán
+                        foreach (DataRow row in dtGioHang.Rows)
+                        {
+                            string maSP = row["MaSP"].ToString();
+                            int soLuongMua = Convert.ToInt32(row["SoLuong"]);
+
+                            string updateSoLuongSql = @"
+                        UPDATE SanPhamDangBan
+                        SET SoLuongDangBan = SoLuongDangBan - @SoLuongMua
+                        WHERE MaSP = @MaSP
+                        AND SoLuongDangBan >= @SoLuongMua";
+
+                            using (SqlCommand cmdUpdate = new SqlCommand(updateSoLuongSql, con, trans))
+                            {
+                                cmdUpdate.Parameters.AddWithValue("@SoLuongMua", soLuongMua);
+                                cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
+
+                                int affectedRows = cmdUpdate.ExecuteNonQuery();
+
+                                if (affectedRows == 0)
+                                {
+                                    throw new Exception("Sản phẩm mã " + maSP + " không đủ số lượng đang bán!");
+                                }
+                            }
+                        }
+
+                        trans.Commit();
+
+                        MessageBox.Show(
+                            "Thanh toán thành công!\nMã hóa đơn: " + maHD,
+                            "Thông báo",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+
+                        dtGioHang.Clear();
+                        CapNhatThongTinHoaDon();
+
+                        txtSoLuongMua_tab2.Clear();
+                        cboSanPham_tab2.SelectedIndex = -1;
+
+                        LoadSanPhamLenComboBoxBanHang();
+                    }
+                    catch (Exception exTrans)
+                    {
+                        trans.Rollback();
+
+                        MessageBox.Show(
+                            "Lỗi khi thanh toán: " + exTrans.Message,
+                            "Lỗi",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Lỗi kết nối database: " + ex.Message,
+                    "Lỗi",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (con != null && con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
     }
 
-    
+
 }
 

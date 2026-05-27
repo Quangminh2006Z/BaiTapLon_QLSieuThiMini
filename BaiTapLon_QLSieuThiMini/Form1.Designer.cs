@@ -49,6 +49,8 @@
             txt_TenSanPhamtab1 = new Label();
             txtSoLuong_tab1 = new TextBox();
             tabPage2 = new TabPage();
+            lblTongTien_tab2 = new Label();
+            lblSoLuongHoaDon_tab2 = new Label();
             label10 = new Label();
             dgvGioHang_tab2 = new DataGridView();
             colMaSP_tab2 = new DataGridViewTextBoxColumn();
@@ -336,6 +338,8 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(lblTongTien_tab2);
+            tabPage2.Controls.Add(lblSoLuongHoaDon_tab2);
             tabPage2.Controls.Add(label10);
             tabPage2.Controls.Add(dgvGioHang_tab2);
             tabPage2.Controls.Add(tableLayoutPanel3);
@@ -347,6 +351,24 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Bán hàng";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // lblTongTien_tab2
+            // 
+            lblTongTien_tab2.AutoSize = true;
+            lblTongTien_tab2.Location = new Point(814, 256);
+            lblTongTien_tab2.Name = "lblTongTien_tab2";
+            lblTongTien_tab2.Size = new Size(148, 25);
+            lblTongTien_tab2.TabIndex = 5;
+            lblTongTien_tab2.Text = "Tổng tiền: 0 VNĐ";
+            // 
+            // lblSoLuongHoaDon_tab2
+            // 
+            lblSoLuongHoaDon_tab2.AutoSize = true;
+            lblSoLuongHoaDon_tab2.Location = new Point(381, 256);
+            lblSoLuongHoaDon_tab2.Name = "lblSoLuongHoaDon_tab2";
+            lblSoLuongHoaDon_tab2.Size = new Size(176, 25);
+            lblSoLuongHoaDon_tab2.TabIndex = 4;
+            lblSoLuongHoaDon_tab2.Text = "Số lượng hóa đơn: 0";
             // 
             // label10
             // 
@@ -481,6 +503,7 @@
             btnThanhToan_tab2.TabIndex = 1;
             btnThanhToan_tab2.Text = "Thanh toán";
             btnThanhToan_tab2.UseVisualStyleBackColor = true;
+            btnThanhToan_tab2.Click += btnThanhToan_tab2_Click;
             // 
             // btnThemSanPham_tab2
             // 
@@ -492,6 +515,7 @@
             btnThemSanPham_tab2.TabIndex = 3;
             btnThemSanPham_tab2.Text = "Thêm sản phẩm";
             btnThemSanPham_tab2.UseVisualStyleBackColor = true;
+            btnThemSanPham_tab2.Click += btnThemSanPham_tab2_Click;
             // 
             // tabNhapHang
             // 
@@ -904,5 +928,7 @@
         private DataGridViewTextBoxColumn colSoLuong_tab2;
         private DataGridViewTextBoxColumn colDonGia_tab2;
         private DataGridViewTextBoxColumn colThanhTien_tab2;
+        private Label lblTongTien_tab2;
+        private Label lblSoLuongHoaDon_tab2;
     }
 }
