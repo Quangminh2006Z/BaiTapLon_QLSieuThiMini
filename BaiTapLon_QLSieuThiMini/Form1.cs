@@ -14,18 +14,17 @@ namespace BaiTapLon_QLSieuThiMini
         //Các biến lưu thông tin các bảng
         DataTable dtLichSuNhap = new DataTable();
         DataTable dtKhoHang = new DataTable();
-        DataTable dtGioHang = new DataTable();
+        DataTable dtSanPhamDangBan = new DataTable();
+
 
         public Form1()
         {
             InitializeComponent();
-            con = new SqlConnection(connectedString);
-            TaoBangGioHang();
-            LoadSanPhamLenComboBoxBanHang();
-            btnThemSanPham_tab2.Click += btnThemSanPham_tab2_Click;
-            //Nguyẽn vũ quang minh
+
             // Tắt tự động tạo cột
             tableLichSuNhap.AutoGenerateColumns = false;
+            dgvSanPhamDuocBan_tab1.AutoGenerateColumns = false;
+
             // Gắn tên cột trong CSDL vào các cột đã tạo sẵn
             tableLichSuNhap.Columns["ColumnForMaPN"].DataPropertyName = "MaPN";
             tableLichSuNhap.Columns["ColumnForMaSP"].DataPropertyName = "MaSP";
@@ -38,6 +37,21 @@ namespace BaiTapLon_QLSieuThiMini
             tableKhoHang.Columns["ColumnTenSP"].DataPropertyName = "TenSP";
             tableKhoHang.Columns["ColumnSoLuong"].DataPropertyName = "SoLuongTrongKho";
 
+            // Khởi tạo cấu trúc dtSanPhamDangBan
+            dtSanPhamDangBan.Columns.Add("MaSP", typeof(string));
+            dtSanPhamDangBan.Columns.Add("TenSP", typeof(string));
+
+            dtSanPhamDangBan.Columns.Add("GiaBan", typeof(int));
+            dtSanPhamDangBan.Columns.Add("SoLuongDangBan", typeof(int));
+
+            dgvSanPhamDuocBan_tab1.DataSource = dtSanPhamDangBan;
+
+            //Gắn DataPropertyName cho 5 cột design sẵn
+            dgvSanPhamDuocBan_tab1.Columns["colMa"].DataPropertyName = "MaSP";
+            dgvSanPhamDuocBan_tab1.Columns["colTen_tab1"].DataPropertyName = "TenSP";
+
+            dgvSanPhamDuocBan_tab1.Columns["colGia_tab1"].DataPropertyName = "GiaBan";
+            dgvSanPhamDuocBan_tab1.Columns["colSoLuongBan_tab1"].DataPropertyName = "SoLuongDangBan";
             con = new SqlConnection(connectedString);
             try
             {
@@ -55,6 +69,22 @@ namespace BaiTapLon_QLSieuThiMini
                 SqlDataAdapter adtKhoHang = new SqlDataAdapter(cmdKhoHang);
                 adtKhoHang.Fill(dtKhoHang);
                 tableKhoHang.DataSource = dtKhoHang;
+                cbSanPham.DataSource = dtKhoHang;
+
+                cbSanPham.DisplayMember = "TenSP";
+
+                cbSanPham.ValueMember = "MaSP";
+
+                //Lấy dữ liệu từ SanPhamDangBan
+                SqlCommand cmdSanPhamBan =
+                new SqlCommand("SELECT * FROM SanPhamDangBan", con);
+
+                SqlDataAdapter adtSanPhamBan =
+                new SqlDataAdapter(cmdSanPhamBan);
+
+                adtSanPhamBan.Fill(dtSanPhamDangBan);
+
+
 
                 //Đóng kết nối 
                 con.Close();
@@ -254,292 +284,306 @@ namespace BaiTapLon_QLSieuThiMini
             }
 
         }
-        // Nguyen Vu Quang Minh
-        #region Nguyen Trong Nghia - Tab Ban Hang
 
-        DataTable dtSanPhamDangBan = new DataTable();
-
-        private void LoadSanPhamLenComboBoxBanHang()
+        private void tabPage1_Click(object sender, EventArgs e)
         {
-            if (con == null)
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            if (dgvSanPhamDuocBan_tab1.CurrentRow == null) return;
+
+            if (!int.TryParse(txtGia_tab1.Text, out int gia) ||
+                !int.TryParse(slban.Text, out int soLuongBan) ||
+                gia <= 0 || soLuongBan <= 0)
             {
-                con = new SqlConnection(connectedString);
+                MessageBox.Show("Dữ liệu không hợp lệ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
-            dtSanPhamDangBan.Clear();
+            string maSP = cbSanPham.SelectedValue.ToString();
 
+            // Cập nhật DB
             try
             {
-                if (con.State == ConnectionState.Closed)
+                if (con.State == ConnectionState.Closed) con.Open();
+
+                string updateCmd = @"UPDATE SanPhamDangBan 
+                            SET GiaBan = @GiaBan, SoLuongDangBan = @SoLuongBan
+                            WHERE MaSP = @MaSP";
+                using (SqlCommand cmd = new SqlCommand(updateCmd, con))
                 {
-                    con.Open();
+                    cmd.Parameters.AddWithValue("@GiaBan", gia);
+                    cmd.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+                    cmd.Parameters.AddWithValue("@MaSP", maSP);
+                    cmd.ExecuteNonQuery();
                 }
-
-                string sql = @"
-            SELECT 
-                spdb.MaSP,
-                spk.TenSP,
-                spdb.SoLuongDangBan,
-                spdb.GiaBan
-            FROM SanPhamDangBan spdb
-            JOIN SanPhamTrongKho spk
-                ON spdb.MaSP = spk.MaSP
-            WHERE spdb.SoLuongDangBan > 0";
-
-                SqlDataAdapter adt = new SqlDataAdapter(sql, con);
-                adt.Fill(dtSanPhamDangBan);
-
-                cboSanPham_tab2.DataSource = dtSanPhamDangBan;
-                cboSanPham_tab2.DisplayMember = "TenSP";
-                cboSanPham_tab2.ValueMember = "MaSP";
-                cboSanPham_tab2.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi load ComboBox bán hàng: " + ex.Message);
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             finally
             {
-                if (con != null && con.State == ConnectionState.Open)
-                {
-                    con.Close();
-                }
+                if (con.State == ConnectionState.Open) con.Close();
             }
+
+            // Cập nhật RAM
+            DataRow[] foundGrid = dtSanPhamDangBan.Select($"MaSP = '{maSP}'");
+            if (foundGrid.Length > 0)
+            {
+                foundGrid[0]["GiaBan"] = gia;
+                foundGrid[0]["SoLuongDangBan"] = soLuongBan;
+            }
+
+            MessageBox.Show("Sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            txtGia_tab1.Clear();
+            slban.Clear();
+            cbSanPham.SelectedIndex = 0;
         }
-        private void btnThemSanPham_tab2_Click(object sender, EventArgs e)
+
+        private void btnThem_tab1_Click(object sender, EventArgs e)
         {
-            if (cboSanPham_tab2.SelectedIndex == -1)
-            {
-                MessageBox.Show("Vui lòng chọn sản phẩm!");
-                return;
-            }
 
-            if (string.IsNullOrWhiteSpace(txtSoLuongMua_tab2.Text))
-            {
-                MessageBox.Show("Vui lòng nhập số lượng mua!");
-                return;
-            }
-
-            if (!int.TryParse(txtSoLuongMua_tab2.Text.Trim(), out int soLuongMua))
-            {
-                MessageBox.Show("Số lượng mua phải là số nguyên!");
-                return;
-            }
-
-            if (soLuongMua <= 0)
-            {
-                MessageBox.Show("Số lượng mua phải lớn hơn 0!");
-                return;
-            }
-
-            DataRowView selectedRow = cboSanPham_tab2.SelectedItem as DataRowView;
-
-            if (selectedRow == null)
-            {
-                MessageBox.Show("Dữ liệu sản phẩm không hợp lệ!");
-                return;
-            }
-
-            string maSP = selectedRow["MaSP"].ToString();
-            string tenSP = selectedRow["TenSP"].ToString();
-            int soLuongDangBan = Convert.ToInt32(selectedRow["SoLuongDangBan"]);
-            int giaBan = Convert.ToInt32(selectedRow["GiaBan"]);
-
-            DataRow[] foundRows = dtGioHang.Select($"MaSP = '{maSP}'");
-
-            int soLuongDaCoTrongGio = 0;
-
-            if (foundRows.Length > 0)
-            {
-                soLuongDaCoTrongGio = Convert.ToInt32(foundRows[0]["SoLuong"]);
-            }
-
-            if (soLuongDaCoTrongGio + soLuongMua > soLuongDangBan)
-            {
-                MessageBox.Show("Không được bán vượt quá số lượng sản phẩm đang bán!");
-                return;
-            }
-
-            if (foundRows.Length > 0)
-            {
-                int soLuongMoi = soLuongDaCoTrongGio + soLuongMua;
-
-                foundRows[0]["SoLuong"] = soLuongMoi;
-                foundRows[0]["ThanhTien"] = soLuongMoi * giaBan;
-            }
-            else
-            {
-                DataRow newRow = dtGioHang.NewRow();
-
-                newRow["MaSP"] = maSP;
-                newRow["TenSP"] = tenSP;
-                newRow["SoLuong"] = soLuongMua;
-                newRow["DonGia"] = giaBan;
-                newRow["ThanhTien"] = soLuongMua * giaBan;
-
-                dtGioHang.Rows.Add(newRow);
-            }
-            CapNhatThongTinHoaDon();
-            txtSoLuongMua_tab2.Clear();
-            cboSanPham_tab2.SelectedIndex = -1;
         }
-        private void TaoBangGioHang()
+
+        private void dgvSanPhamDuocBan_tab1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            dtGioHang.Columns.Add("MaSP", typeof(string));
-            dtGioHang.Columns.Add("TenSP", typeof(string));
-            dtGioHang.Columns.Add("SoLuong", typeof(int));
-            dtGioHang.Columns.Add("DonGia", typeof(int));
-            dtGioHang.Columns.Add("ThanhTien", typeof(int));
 
-            dgvGioHang_tab2.AutoGenerateColumns = false;
-
-            colMaSP_tab2.DataPropertyName = "MaSP";
-            colTenSanPham_tab2.DataPropertyName = "TenSP";
-            colSoLuong_tab2.DataPropertyName = "SoLuong";
-            colDonGia_tab2.DataPropertyName = "DonGia";
-            colThanhTien_tab2.DataPropertyName = "ThanhTien";
-
-            dgvGioHang_tab2.DataSource = dtGioHang;
         }
-        private void CapNhatThongTinHoaDon()
+
+        private void cbSanPham_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int soDongSanPham = dtGioHang.Rows.Count;
-            int tongTien = 0;
 
-            foreach (DataRow row in dtGioHang.Rows)
-            {
-                tongTien += Convert.ToInt32(row["ThanhTien"]);
-            }
-
-            lblSoLuongHoaDon_tab2.Text = "Số mặt hàng: " + soDongSanPham;
-            lblTongTien_tab2.Text = "Tổng tiền: " + tongTien.ToString("N0") + " VNĐ";
         }
-        private int LayTongTienHoaDon()
+
+        private void btnThem_tab1_Click_1(object sender, EventArgs e)
+        // Validate dữ liệu đầu vào
         {
-            int tongTien = 0;
-
-            foreach (DataRow row in dtGioHang.Rows)
+            if (!int.TryParse(txtGia_tab1.Text, out int gia) ||
+                !int.TryParse(slban.Text, out int soLuongBan))
             {
-                tongTien += Convert.ToInt32(row["ThanhTien"]);
-            }
-
-            return tongTien;
-        }
-        #endregion
-
-        private void btnThanhToan_tab2_Click(object sender, EventArgs e)
-        { 
-            if (dtGioHang.Rows.Count == 0)
-            {
-                MessageBox.Show("Giỏ hàng đang trống!", "Cảnh báo");
+                MessageBox.Show("Dữ liệu không hợp lệ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            string maHD = "HD" + DateTime.Now.ToString("yyyyMMddHHmmss");
-            DateTime ngayIn = DateTime.Now;
-            int tongTien = LayTongTienHoaDon();
+            if (gia <= 0 || soLuongBan <= 0)
+            {
+                MessageBox.Show("Số lượng và giá phải > 0", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            string maSP = cbSanPham.SelectedValue.ToString();
+            string tenSP = cbSanPham.Text;
+
+            // Kiểm tra tồn kho RAM
+            DataRow[] foundKho = dtKhoHang.Select($"MaSP = '{maSP}'");
+            if (foundKho.Length == 0)
+            {
+                MessageBox.Show("Không tìm thấy sản phẩm trong kho", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int soLuongTon = Convert.ToInt32(foundKho[0]["SoLuongTrongKho"]);
+            if (soLuongBan > soLuongTon)
+            {
+                MessageBox.Show($"Không đủ hàng! Tồn kho hiện tại: {soLuongTon}", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Lưu vào DB trước
             try
             {
-                if (con == null)
-                {
-                    con = new SqlConnection(connectedString);
-                }
-
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
+                if (con.State == ConnectionState.Closed) con.Open();
 
                 using (SqlTransaction trans = con.BeginTransaction())
                 {
                     try
                     {
-                        // 1. Lưu hóa đơn
-                        string insertHoaDonSql = @"
-                    INSERT INTO HoaDon(MaHD, NgayIn, TongTien)
-                    VALUES (@MaHD, @NgayIn, @TongTien)";
-
-                        using (SqlCommand cmdInsertHoaDon = new SqlCommand(insertHoaDonSql, con, trans))
+                        string checkCmd = "SELECT COUNT(*) FROM SanPhamDangBan WHERE MaSP = @MaSP";
+                        using (SqlCommand cmdCheck = new SqlCommand(checkCmd, con, trans))
                         {
-                            cmdInsertHoaDon.Parameters.AddWithValue("@MaHD", maHD);
-                            cmdInsertHoaDon.Parameters.AddWithValue("@NgayIn", ngayIn);
-                            cmdInsertHoaDon.Parameters.AddWithValue("@TongTien", tongTien);
-                            cmdInsertHoaDon.ExecuteNonQuery();
-                        }
+                            cmdCheck.Parameters.AddWithValue("@MaSP", maSP);
+                            int count = (int)cmdCheck.ExecuteScalar();
 
-                        // 2. Trừ số lượng sản phẩm đang bán
-                        foreach (DataRow row in dtGioHang.Rows)
-                        {
-                            string maSP = row["MaSP"].ToString();
-                            int soLuongMua = Convert.ToInt32(row["SoLuong"]);
-
-                            string updateSoLuongSql = @"
-                        UPDATE SanPhamDangBan
-                        SET SoLuongDangBan = SoLuongDangBan - @SoLuongMua
-                        WHERE MaSP = @MaSP
-                        AND SoLuongDangBan >= @SoLuongMua";
-
-                            using (SqlCommand cmdUpdate = new SqlCommand(updateSoLuongSql, con, trans))
+                            if (count > 0)
                             {
-                                cmdUpdate.Parameters.AddWithValue("@SoLuongMua", soLuongMua);
-                                cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
-
-                                int affectedRows = cmdUpdate.ExecuteNonQuery();
-
-                                if (affectedRows == 0)
+                                string updateCmd = @"UPDATE SanPhamDangBan 
+                                            SET SoLuongDangBan = SoLuongDangBan + @SoLuongBan,
+                                                GiaBan = @GiaBan
+                                            WHERE MaSP = @MaSP";
+                                using (SqlCommand cmdUpdate = new SqlCommand(updateCmd, con, trans))
                                 {
-                                    throw new Exception("Sản phẩm mã " + maSP + " không đủ số lượng đang bán!");
+                                    cmdUpdate.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+
+                                    cmdUpdate.Parameters.AddWithValue("@GiaBan", gia);
+                                    cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
+                                    cmdUpdate.ExecuteNonQuery();
                                 }
                             }
+                            else
+                            {
+                                string insertCmd = @"INSERT INTO SanPhamDangBan (MaSP, TenSP, GiaBan, SoLuongDangBan) 
+                                            VALUES (@MaSP, @TenSP, @GiaBan, @SoLuongBan)";
+                                using (SqlCommand cmdInsert = new SqlCommand(insertCmd, con, trans))
+                                {
+                                    cmdInsert.Parameters.AddWithValue("@MaSP", maSP);
+                                    cmdInsert.Parameters.AddWithValue("@TenSP", tenSP);
+                                    cmdInsert.Parameters.AddWithValue("@GiaBan", gia);
+                                    cmdInsert.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+                                    cmdInsert.ExecuteNonQuery();
+                                }
+                            }
+
+                            string updateKhoCmd = @"UPDATE SanPhamTrongKho 
+                                           SET SoLuongTrongKho = SoLuongTrongKho - @SoLuongBan 
+                                           WHERE MaSP = @MaSP";
+                            using (SqlCommand cmdUpdateKho = new SqlCommand(updateKhoCmd, con, trans))
+                            {
+                                cmdUpdateKho.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+                                cmdUpdateKho.Parameters.AddWithValue("@MaSP", maSP);
+                                cmdUpdateKho.ExecuteNonQuery();
+                            }
+
+                            trans.Commit();
                         }
-
-                        trans.Commit();
-
-                        MessageBox.Show(
-                            "Thanh toán thành công!\nMã hóa đơn: " + maHD,
-                            "Thông báo",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-
-                        dtGioHang.Clear();
-                        CapNhatThongTinHoaDon();
-
-                        txtSoLuongMua_tab2.Clear();
-                        cboSanPham_tab2.SelectedIndex = -1;
-
-                        LoadSanPhamLenComboBoxBanHang();
                     }
                     catch (Exception exTrans)
                     {
                         trans.Rollback();
-
-                        MessageBox.Show(
-                            "Lỗi khi thanh toán: " + exTrans.Message,
-                            "Lỗi",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
+                        throw exTrans;
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Lỗi kết nối database: " + ex.Message,
-                    "Lỗi",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi lưu vào database: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             finally
             {
-                if (con != null && con.State == ConnectionState.Open)
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+
+            // Cập nhật RAM sau khi DB thành công
+            DataRow[] foundGrid = dtSanPhamDangBan.Select($"MaSP = '{maSP}'");
+            if (foundGrid.Length > 0)
+            {
+                foundGrid[0]["SoLuongDangBan"] = Convert.ToInt32(foundGrid[0]["SoLuongDangBan"]) + soLuongBan;
+                foundGrid[0]["GiaBan"] = gia;
+            }
+            else
+            {
+                DataRow newRow = dtSanPhamDangBan.NewRow();
+                newRow["MaSP"] = maSP;
+                newRow["TenSP"] = tenSP;
+                newRow["GiaBan"] = gia;
+                newRow["SoLuongDangBan"] = soLuongBan;
+                dtSanPhamDangBan.Rows.Add(newRow);
+            }
+
+            // Trừ tồn kho RAM
+            foundKho[0]["SoLuongTrongKho"] = soLuongTon - soLuongBan;
+
+            MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            txtGia_tab1.Clear();
+            slban.Clear();
+            cbSanPham.SelectedIndex = 0;
+        }
+
+        private void search_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgvSanPhamDuocBan_tab1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnXoa_tab1_Click(object sender, EventArgs e)
+        {
+            if (dgvSanPhamDuocBan_tab1.CurrentRow == null) return;
+
+            string maSP = dgvSanPhamDuocBan_tab1.CurrentRow.Cells["colMa"].Value?.ToString();
+            if (string.IsNullOrEmpty(maSP)) return;
+
+            if (MessageBox.Show($"Xác nhận xóa sản phẩm {maSP}?", "Xác nhận",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+
+            // Xóa DB
+            try
+            {
+                if (con.State == ConnectionState.Closed) con.Open();
+
+                string deleteCmd = "DELETE FROM SanPhamDangBan WHERE MaSP = @MaSP";
+                using (SqlCommand cmd = new SqlCommand(deleteCmd, con))
                 {
-                    con.Close();
+                    cmd.Parameters.AddWithValue("@MaSP", maSP);
+                    cmd.ExecuteNonQuery();
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open) con.Close();
+            }
+
+            // Xóa RAM
+            DataRow[] foundGrid = dtSanPhamDangBan.Select($"MaSP = '{maSP}'");
+            if (foundGrid.Length > 0)
+                foundGrid[0].Delete();
+
+            MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            txtGia_tab1.Clear();
+            slban.Clear();
+            cbSanPham.SelectedIndex = 0;
+        }
+
+        private void dgvSanPhamDuocBan_tab1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            DataGridViewRow row = dgvSanPhamDuocBan_tab1.Rows[e.RowIndex];
+
+            string maSP = row.Cells["colMa"].Value?.ToString();
+            cbSanPham.SelectedValue = maSP;
+            txtGia_tab1.Text = row.Cells["colGia_tab1"].Value?.ToString();
+            slban.Text = row.Cells["colSoLuongBan_tab1"].Value?.ToString();
+        }
+
+        private void btnTim_tab1_Click(object sender, EventArgs e)
+        {
+            string keyword = txtTim_tab1.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                // Nếu trống thì hiện lại toàn bộ
+                dtSanPhamDangBan.DefaultView.RowFilter = "";
+                return;
+            }
+
+            // Lọc theo TenSP chứa từ khóa (không phân biệt hoa thường)
+            dtSanPhamDangBan.DefaultView.RowFilter = $"TenSP LIKE '%{keyword}%'";
+        }
+
+        private void txtTim_tab1_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtTim_tab1.Text))
+                dtSanPhamDangBan.DefaultView.RowFilter = "";
         }
     }
-
-
 }
 
