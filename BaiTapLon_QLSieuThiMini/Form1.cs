@@ -64,13 +64,13 @@ namespace BaiTapLon_QLSieuThiMini
                 //Mở kết nối với CSDL
                 con.Open();
 
-                //Lấy dữ liệu từ LichSuNhapHang trong database
+                //Lấy dữ liệu, cấu trúc các cột của bảng LichSuNhapHang trong database
                 SqlCommand cmdLichSuNhap = new SqlCommand("Select *, (SoLuongNhap * GiaNhap) as ThanhTien from LichSuNhapHang", con);
                 adt = new SqlDataAdapter(cmdLichSuNhap);
                 adt.Fill(dtLichSuNhap);
                 tableLichSuNhap.DataSource = dtLichSuNhap;
 
-                //Lấy dữ liệu từ SanPhamTrongKho trong database
+                //Lấy dữ liệu, cấu trúc các cột của bảng SanPhamTrongKho trong database
                 SqlCommand cmdKhoHang = new SqlCommand("Select * from SanPhamTrongKho", con);
                 SqlDataAdapter adtKhoHang = new SqlDataAdapter(cmdKhoHang);
                 adtKhoHang.Fill(dtKhoHang);
@@ -183,6 +183,8 @@ namespace BaiTapLon_QLSieuThiMini
                     MessageBox.Show("Phiếu nhập đã tồn tại! Vui lòng nhập mã khác.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+
                 //Thêm dữ liệu được nhập vào database
                 try
                 {
@@ -200,7 +202,7 @@ namespace BaiTapLon_QLSieuThiMini
                             string checkCmdText = "SELECT COUNT(*) FROM SanPhamTrongKho WHERE MaSP = @MaSP";
                             using (SqlCommand cmdCheck = new SqlCommand(checkCmdText, con, trans))
                             {
-                                //Gán maSP lấy từ textBox(đặt ở trên) gán cho lệnh checkCmdText
+                                //Gán maSP lấy từ textBox (đặt ở trên) gán cho lệnh checkCmdText
                                 cmdCheck.Parameters.AddWithValue("@MaSP", maSP);
                                 //Lấy số được trả về từ lệnh checkCmd bằng lệnh ExecuteScalar, đặt cho biến int
                                 int count = (int)cmdCheck.ExecuteScalar();
@@ -282,6 +284,7 @@ namespace BaiTapLon_QLSieuThiMini
                 }
                 else
                 {
+                    //tạo ra hàng mới được lấy từ khuôn của dtKhoHang tạo từ đầu chương trình 
                     DataRow newKhoHangRow = dtKhoHang.NewRow();
                     newKhoHangRow["MaSP"] = textBoxForMaSP.Text;
                     newKhoHangRow["TenSP"] = textBoxForTenSP.Text;
@@ -291,7 +294,8 @@ namespace BaiTapLon_QLSieuThiMini
 
 
                 //Thêm vào bảng lịch sử nhập
-                
+
+                //tạo ra row mới được lấy từ khuôn của dtLichSuNhap tạo từ đầu chương trình 
                     DataRow newLichSuNhapRow = dtLichSuNhap.NewRow();
                     newLichSuNhapRow["MaPN"] = textBoxForMaPN.Text;
                     newLichSuNhapRow["MaSP"] = textBoxForMaSP.Text;
