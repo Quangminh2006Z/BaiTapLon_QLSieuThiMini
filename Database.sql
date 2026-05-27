@@ -13,7 +13,10 @@ create table SanPhamTrongKho
 
 create table SanPhamDangBan
 (
+
+
 	MaSP VARCHAR(20) not null PRIMARY KEY,
+    TenSP NVARCHAR(100) not null,
 	SoLuongDangBan INT not null check ( SoLuongDangBan >= 0),
 	GiaBan INT not null check ( GiaBan > 0)
 	Constraint FK_SanPhamDangBan_SanPhamTrongKho
