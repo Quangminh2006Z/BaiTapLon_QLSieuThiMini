@@ -6,16 +6,20 @@ namespace BaiTapLon_QLSieuThiMini
     public partial class Form1 : Form
     {
         //Các biến tương tác csdl
-        string connectedString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=QLSieuThi;Integrated Security=True;Trust Server Certificate=True";
+        string connectedString = @"Data Source=.\SQLEXPRESS;Initial Catalog=QLSieuThi2;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
         SqlConnection con;
         SqlDataAdapter adt = new SqlDataAdapter();
         SqlCommand cmd;
 
         //Các biến lưu thông tin các bảng
         DataTable dtLichSuNhap = new DataTable();
+
         DataTable dtKhoHang = new DataTable();
+
         DataTable dtSanPhamDangBan = new DataTable();
+
         DataTable dtGioHang_tab2 = new DataTable();
+
         DataTable dtSanPhamBan_tab2 = new DataTable();
 
         public Form1()
@@ -139,14 +143,44 @@ namespace BaiTapLon_QLSieuThiMini
                     MessageBox.Show("Vui lòng nhập số nguyên dương!", "Thông báo");
                     return;
                 }
+
+                //Lấy nội dung từ textbox lưu vào các biến
                 int thanhTien = soLuong * donGia;
                 string maSP = textBoxForMaSP.Text.Trim();
                 string tenSP = textBoxForTenSP.Text.Trim();
                 string maPN = textBoxForMaPN.Text.Trim();
                 DateTime ngayNhap = DateTime.Now;
+
+
                 //Mảng lưu thông tin các mã sản phẩm sẵn có bằng cách duyệt qua các MaSP
                 DataRow[] foundRowMaSP = dtKhoHang.Select($"MaSP = '{textBoxForMaSP.Text.Trim()}'");
 
+                if (foundRowMaSP.Length > 0)
+                {
+                    // Lấy tên sản phẩm đang có sẵn trong kho
+                    string tenSPCoSan = foundRowMaSP[0]["TenSP"].ToString();
+
+                    // So sánh tên người dùng nhập và tên có sẵn (không phân biệt chữ hoa chữ thường)
+                    if (!string.Equals(tenSPCoSan.Trim(), tenSP, StringComparison.OrdinalIgnoreCase))
+                    {
+                        MessageBox.Show($"Mã sản phẩm '{maSP}' đã tồn tại trong kho với tên là:\n[{tenSPCoSan}]\n" 
+                            + $"\nVui lòng nhập lại tên sản phẩm hoặc một mã sản phẩm khác!",
+                                        "Tên sản phẩm không trùng khớp",
+                                        MessageBoxButtons.OK,
+                                        MessageBoxIcon.Error);
+                        // Chặn không cho lưu tiếp
+                        return; 
+                        
+                    }
+                }
+
+                //Mảng lưu thông tin phiếu nhập nếu đã tồn tại
+                DataRow[] foundRowMaPN = dtLichSuNhap.Select($"MaPN = '{maPN}'");
+                if (foundRowMaPN.Length > 0)
+                {
+                    MessageBox.Show("Phiếu nhập đã tồn tại! Vui lòng nhập mã khác.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 //Thêm dữ liệu được nhập vào database
                 try
                 {
@@ -195,8 +229,7 @@ namespace BaiTapLon_QLSieuThiMini
                                 }
 
                                 //Lưu vào LichSuNhapHang
-                                if (foundRowMaSP.Length == 0)
-                                {
+                                
 
                                     string insertLichSuNhapCmd = "INSERT INTO LichSuNhapHang(MaPN, MaSP,TenSP,SoLuongNhap, NgayNhap,GiaNhap) VALUES (@MaPN,@MaSP,@TenSP,@SoLuongNhap, @NgayNhap,@GiaNhap)";
                                     using (SqlCommand cmdInsertLichSuNhapCmd = new SqlCommand(insertLichSuNhapCmd, con, trans))
@@ -208,10 +241,7 @@ namespace BaiTapLon_QLSieuThiMini
                                         cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@NgayNhap", ngayNhap);
                                         cmdInsertLichSuNhapCmd.Parameters.AddWithValue("@GiaNhap", donGia);
                                         cmdInsertLichSuNhapCmd.ExecuteNonQuery();
-
-                                    }
-                                }
-
+                                    }                             
                                 trans.Commit();
                                 MessageBox.Show(
                                     "Dữ liệu đã được lưu thành công vào cơ sở dữ liệu!",
@@ -259,14 +289,7 @@ namespace BaiTapLon_QLSieuThiMini
 
 
                 //Thêm vào bảng lịch sử nhập
-                DataRow[] foundRowMaPN = dtLichSuNhap.Select($"MaPN = '{textBoxForMaPN.Text.Trim()}'");
-
-                if (foundRowMaPN.Length > 0)
-                {
-                    MessageBox.Show("Phiếu nhập sẽ không được tạo vì đã có mã phiếu nhập tồn tại!", "Mã phiếu nhập đã tồn tại!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
+                
                     DataRow newLichSuNhapRow = dtLichSuNhap.NewRow();
                     newLichSuNhapRow["MaPN"] = textBoxForMaPN.Text;
                     newLichSuNhapRow["MaSP"] = textBoxForMaSP.Text;
@@ -274,7 +297,7 @@ namespace BaiTapLon_QLSieuThiMini
                     newLichSuNhapRow["ThanhTien"] = thanhTien;
                     newLichSuNhapRow["NgayNhap"] = DateTime.Now;
                     dtLichSuNhap.Rows.Add(newLichSuNhapRow);
-                }
+                
                 MessageBox.Show("Dữ liệu đã được thêm vào bảng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 textBoxForDonGia.Clear();
                 textBoxForMaPN.Clear();

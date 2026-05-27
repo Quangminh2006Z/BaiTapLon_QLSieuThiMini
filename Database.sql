@@ -1,6 +1,6 @@
-CREATE DATABASE QLSieuThi
+CREATE DATABASE QLSieuThi2
 
-USE QLSieuThi
+USE QLSieuThi2
 
 
 create table SanPhamTrongKho 
