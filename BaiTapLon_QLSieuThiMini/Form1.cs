@@ -6,7 +6,8 @@ namespace BaiTapLon_QLSieuThiMini
     public partial class Form1 : Form
     {
         //Các biến tương tác csdl
-        string connectedString = @"Data Source=.\SQLEXPRESS;Initial Catalog=QLSieuThi2;Integrated Security=True;Encrypt=True;Trust Server Certificate=True";
+        string connectedString =
+@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=QLSieuThi2;Integrated Security=True;TrustServerCertificate=True";
         SqlConnection con;
         SqlDataAdapter adt = new SqlDataAdapter();
         SqlCommand cmd;
@@ -74,6 +75,7 @@ namespace BaiTapLon_QLSieuThiMini
                 SqlDataAdapter adtKhoHang = new SqlDataAdapter(cmdKhoHang);
                 adtKhoHang.Fill(dtKhoHang);
                 tableKhoHang.DataSource = dtKhoHang;
+                //Lấy dư liệu từ Kho cho vào cb
                 cbSanPham.DataSource = dtKhoHang;
 
                 cbSanPham.DisplayMember = "TenSP";
@@ -330,47 +332,50 @@ namespace BaiTapLon_QLSieuThiMini
                 !int.TryParse(slban.Text, out int soLuongBan) ||
                 gia <= 0 || soLuongBan <= 0)
             {
-                MessageBox.Show("Dữ liệu không hợp lệ", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Dữ liệu không hợp lệ!");
                 return;
             }
 
             string maSP = cbSanPham.SelectedValue.ToString();
 
-            // Cập nhật DB
             try
             {
-                if (con.State == ConnectionState.Closed) con.Open();
+                if (con.State == ConnectionState.Closed)
+                    con.Open();
 
-                string updateCmd = @"UPDATE SanPhamDangBan 
-                            SET GiaBan = @GiaBan, SoLuongDangBan = @SoLuongBan
-                            WHERE MaSP = @MaSP";
-                using (SqlCommand cmd = new SqlCommand(updateCmd, con))
-                {
-                    cmd.Parameters.AddWithValue("@GiaBan", gia);
-                    cmd.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
-                    cmd.Parameters.AddWithValue("@MaSP", maSP);
-                    cmd.ExecuteNonQuery();
-                }
+                string sql = @"
+        UPDATE SanPhamDangBan
+        SET GiaBan = @GiaBan,
+            SoLuongDangBan = @SoLuongBan
+        WHERE MaSP = @MaSP";
+
+                SqlCommand cmd = new SqlCommand(sql, con);
+
+                cmd.Parameters.AddWithValue("@GiaBan", gia);
+                cmd.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+                cmd.Parameters.AddWithValue("@MaSP", maSP);
+
+                cmd.ExecuteNonQuery();
+
+                // Update RAM
+                DataRow row =
+                    dtSanPhamDangBan.Select($"MaSP = '{maSP}'")[0];
+
+                row["GiaBan"] = gia;
+                row["SoLuongDangBan"] = soLuongBan;
+
+                MessageBox.Show("Sửa thành công!");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show(ex.Message);
             }
             finally
             {
-                if (con.State == ConnectionState.Open) con.Close();
+                if (con.State == ConnectionState.Open)
+                    con.Close();
             }
 
-            // Cập nhật RAM
-            DataRow[] foundGrid = dtSanPhamDangBan.Select($"MaSP = '{maSP}'");
-            if (foundGrid.Length > 0)
-            {
-                foundGrid[0]["GiaBan"] = gia;
-                foundGrid[0]["SoLuongDangBan"] = soLuongBan;
-            }
-
-            MessageBox.Show("Sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             txtGia_tab1.Clear();
             slban.Clear();
             cbSanPham.SelectedIndex = 0;
@@ -428,75 +433,78 @@ namespace BaiTapLon_QLSieuThiMini
             // Lưu vào DB trước
             try
             {
-                if (con.State == ConnectionState.Closed) con.Open();
+                if (con.State == ConnectionState.Closed)
+                    con.Open();
 
-                using (SqlTransaction trans = con.BeginTransaction())
+                using SqlTransaction trans = con.BeginTransaction();
+
+                // Kiểm tra sản phẩm đã tồn tại chưa
+                string checkSql =
+                    "SELECT COUNT(*) FROM SanPhamDangBan WHERE MaSP = @MaSP";
+
+                SqlCommand cmdCheck = new SqlCommand(checkSql, con, trans);
+                cmdCheck.Parameters.AddWithValue("@MaSP", maSP);
+
+                int count = (int)cmdCheck.ExecuteScalar();
+
+                // Nếu đã có -> UPDATE
+                if (count > 0)
                 {
-                    try
-                    {
-                        string checkCmd = "SELECT COUNT(*) FROM SanPhamDangBan WHERE MaSP = @MaSP";
-                        using (SqlCommand cmdCheck = new SqlCommand(checkCmd, con, trans))
-                        {
-                            cmdCheck.Parameters.AddWithValue("@MaSP", maSP);
-                            int count = (int)cmdCheck.ExecuteScalar();
+                    string updateSql = @"
+        UPDATE SanPhamDangBan
+        SET SoLuongDangBan += @SoLuongBan,
+            GiaBan = @GiaBan
+        WHERE MaSP = @MaSP";
 
-                            if (count > 0)
-                            {
-                                string updateCmd = @"UPDATE SanPhamDangBan 
-                                            SET SoLuongDangBan = SoLuongDangBan + @SoLuongBan,
-                                                GiaBan = @GiaBan
-                                            WHERE MaSP = @MaSP";
-                                using (SqlCommand cmdUpdate = new SqlCommand(updateCmd, con, trans))
-                                {
-                                    cmdUpdate.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+                    SqlCommand cmdUpdate = new SqlCommand(updateSql, con, trans);
 
-                                    cmdUpdate.Parameters.AddWithValue("@GiaBan", gia);
-                                    cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
-                                    cmdUpdate.ExecuteNonQuery();
-                                }
-                            }
-                            else
-                            {
-                                string insertCmd = @"INSERT INTO SanPhamDangBan (MaSP, TenSP, GiaBan, SoLuongDangBan) 
-                                            VALUES (@MaSP, @TenSP, @GiaBan, @SoLuongBan)";
-                                using (SqlCommand cmdInsert = new SqlCommand(insertCmd, con, trans))
-                                {
-                                    cmdInsert.Parameters.AddWithValue("@MaSP", maSP);
-                                    cmdInsert.Parameters.AddWithValue("@TenSP", tenSP);
-                                    cmdInsert.Parameters.AddWithValue("@GiaBan", gia);
-                                    cmdInsert.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
-                                    cmdInsert.ExecuteNonQuery();
-                                }
-                            }
+                    cmdUpdate.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+                    cmdUpdate.Parameters.AddWithValue("@GiaBan", gia);
+                    cmdUpdate.Parameters.AddWithValue("@MaSP", maSP);
 
-                            string updateKhoCmd = @"UPDATE SanPhamTrongKho 
-                                           SET SoLuongTrongKho = SoLuongTrongKho - @SoLuongBan 
-                                           WHERE MaSP = @MaSP";
-                            using (SqlCommand cmdUpdateKho = new SqlCommand(updateKhoCmd, con, trans))
-                            {
-                                cmdUpdateKho.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
-                                cmdUpdateKho.Parameters.AddWithValue("@MaSP", maSP);
-                                cmdUpdateKho.ExecuteNonQuery();
-                            }
-
-                            trans.Commit();
-                        }
-                    }
-                    catch (Exception exTrans)
-                    {
-                        trans.Rollback();
-                        throw exTrans;
-                    }
+                    cmdUpdate.ExecuteNonQuery();
                 }
+
+                // Nếu chưa có -> INSERT
+                else
+                {
+                    string insertSql = @"
+        INSERT INTO SanPhamDangBan
+        VALUES (@MaSP, @TenSP, @GiaBan, @SoLuongBan)";
+
+                    SqlCommand cmdInsert = new SqlCommand(insertSql, con, trans);
+
+                    cmdInsert.Parameters.AddWithValue("@MaSP", maSP);
+                    cmdInsert.Parameters.AddWithValue("@TenSP", tenSP);
+                    cmdInsert.Parameters.AddWithValue("@GiaBan", gia);
+                    cmdInsert.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+
+                    cmdInsert.ExecuteNonQuery();
+                }
+
+                // Trừ kho
+                string updateKhoSql = @"
+    UPDATE SanPhamTrongKho
+    SET SoLuongTrongKho -= @SoLuongBan
+    WHERE MaSP = @MaSP";
+
+                SqlCommand cmdKho = new SqlCommand(updateKhoSql, con, trans);
+
+                cmdKho.Parameters.AddWithValue("@SoLuongBan", soLuongBan);
+                cmdKho.Parameters.AddWithValue("@MaSP", maSP);
+
+                cmdKho.ExecuteNonQuery();
+
+                trans.Commit();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi lưu vào database: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show(ex.Message);
             }
             finally
             {
-                if (con.State == ConnectionState.Open) con.Close();
+                if (con.State == ConnectionState.Open)
+                    con.Close();
             }
 
             // Cập nhật RAM sau khi DB thành công
@@ -541,10 +549,9 @@ namespace BaiTapLon_QLSieuThiMini
             if (dgvSanPhamDuocBan_tab1.CurrentRow == null) return;
 
             string maSP = dgvSanPhamDuocBan_tab1.CurrentRow.Cells["colMa"].Value?.ToString();
-            if (string.IsNullOrEmpty(maSP)) return;
+         
 
-            if (MessageBox.Show($"Xác nhận xóa sản phẩm {maSP}?", "Xác nhận",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+          
 
             // Xóa DB
             try
@@ -595,12 +602,7 @@ namespace BaiTapLon_QLSieuThiMini
         {
             string keyword = txtTim_tab1.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
-                // Nếu trống thì hiện lại toàn bộ
-                dtSanPhamDangBan.DefaultView.RowFilter = "";
-                return;
-            }
+            
 
             // Lọc theo TenSP chứa từ khóa (không phân biệt hoa thường)
             dtSanPhamDangBan.DefaultView.RowFilter = $"TenSP LIKE '%{keyword}%'";
