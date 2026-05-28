@@ -361,12 +361,30 @@ namespace BaiTapLon_QLSieuThiMini
 
                 cmd.ExecuteNonQuery();
 
-                // Update RAM
+                
+                // Lấy sản phẩm đang bán trong RAM
                 DataRow row =
                     dtSanPhamDangBan.Select($"MaSP = '{maSP}'")[0];
 
+                // Lấy số lượng cũ
+                int slCu =
+                    Convert.ToInt32(row["SoLuongDangBan"]);
+
+                // Tính chênh lệch
+                int chenhLech =
+                    soLuongBan - slCu;
+
+                // Update sản phẩm bán
                 row["GiaBan"] = gia;
                 row["SoLuongDangBan"] = soLuongBan;
+
+                // Update kho
+                DataRow kho =
+                    dtKhoHang.Select($"MaSP = '{maSP}'")[0];
+
+                kho["SoLuongTrongKho"] =
+                    Convert.ToInt32(kho["SoLuongTrongKho"])
+                    - chenhLech;
 
                 MessageBox.Show("Sửa thành công!");
             }
